@@ -111,7 +111,7 @@ namespace FinalGroupProjectTeam8.Controllers
             if (ModelState.IsValid)
             {
                 //TODO: Add fields to user here so they will be saved to do the database
-                var user = new AppUser { UserName = model.Email, Email = model.Email, FName = model.FName };
+                var user = new AppUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
 
                 //TODO:  Once you get roles working, you may want to add users to roles upon creation
