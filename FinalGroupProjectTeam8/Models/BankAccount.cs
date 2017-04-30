@@ -24,8 +24,8 @@ namespace FinalGroupProjectTeam8.Models
         
         // Each account must be owned by a single customer
         [Key]
-        public String CustomerID { get; set; }
-        [ForeignKey("CustomerID")]
+        public String UserID { get; set; }
+        [ForeignKey("UserID")]
         public virtual AppUser User { get; set; }
 
         // Each account has multiple transactions
