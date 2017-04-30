@@ -13,7 +13,7 @@ namespace FinalGroupProjectTeam8.Models
         {
 
             // Setting the type on instantiation so we can be sure type is always properly set
-            this.AccountType = AccountTypeEnum.CheckingAccount;
+            this.AccountType = BankAccountTypeEnum.CheckingAccount;
         }
 
     }

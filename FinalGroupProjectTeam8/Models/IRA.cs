@@ -5,13 +5,13 @@ using System.Web;
 
 namespace FinalGroupProjectTeam8.Models
 {
-    public class IRA : Account
+    public class IRA : BankAccount
     {
         public IRA()
         {
 
             // Setting the type on instantiation so we can be sure type is always properly set
-            this.AccountType = AccountTypeEnum.IRA;
+            this.AccountType = BankAccountTypeEnum.IRA;
         }
     }
 }

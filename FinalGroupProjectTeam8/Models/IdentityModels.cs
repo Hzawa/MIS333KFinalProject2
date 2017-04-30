@@ -55,7 +55,7 @@ namespace FinalGroupProjectTeam8.Models
          */
 
         // Each user can have many accounts (move to customer level?)
-        public virtual List<Account> Accounts { get; set; }
+        public virtual List<BankAccount> BankAccounts { get; set; }
 
 
         //This method allows you to create a new user
@@ -75,7 +75,7 @@ namespace FinalGroupProjectTeam8.Models
         //Remember, Identity adds a db set for users, so you shouldn't add that one - you will get an error
 
         // AppUser automatically supported by Identity: public DbSet<AppUser> Users { get; set; }
-        public DbSet<Account> Accounts { get; set; }
+        public DbSet<BankAccount> BankAccounts { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Dispute> Disputes { get; set; }
         public DbSet<Payee> Payees { get; set; }

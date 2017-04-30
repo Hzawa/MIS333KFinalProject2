@@ -31,9 +31,9 @@ namespace FinalGroupProjectTeam8.Models
          */
 
         // Transactions are created by accounts
-        public String AccountID { get; set; }
-        [ForeignKey("AccountID")]
-        public virtual Account Account { get; set; }
+        public String BankAccountID { get; set; }
+        [ForeignKey("BankAccountID")]
+        public virtual BankAccount BankAccount { get; set; }
 
         // A transaction may have a payee
         public String PayeeID { get; set; }

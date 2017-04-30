@@ -222,7 +222,7 @@
       <DependentUpon>201704300217112_test2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\BankAccount.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CashAccount.cs" />
     <Compile Include="Models\CheckingAccount.cs" />

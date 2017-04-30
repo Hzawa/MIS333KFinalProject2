@@ -7,13 +7,13 @@ using System.Web;
 
 namespace FinalGroupProjectTeam8.Models
 {
-    public class Account
+    public class BankAccount
     {
         
-        public enum AccountTypeEnum { CheckingAccount, SavingsAccount, IRA, StockPortfolio }
-        public AccountTypeEnum AccountType { get; set; }
+        public enum BankAccountTypeEnum { CheckingAccount, SavingsAccount, IRA, StockPortfolio }
+        public BankAccountTypeEnum AccountType { get; set; }
 
-        public String AccountID { get; set; }
+        public String BankAccountID { get; set; }
         public String Name { get; set; }
         public Decimal Balance { get; set; }
         public Boolean Active { get; set; }

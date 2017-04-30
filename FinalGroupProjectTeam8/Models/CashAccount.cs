@@ -5,7 +5,7 @@ using System.Web;
 
 namespace FinalGroupProjectTeam8.Models
 {
-    public class CashAccount : Account
+    public class CashAccount : BankAccount
     {
     }
 }
