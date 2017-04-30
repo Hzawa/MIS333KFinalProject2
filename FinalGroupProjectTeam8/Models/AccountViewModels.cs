@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace FinalGroupProjectTeam8.Models
@@ -22,6 +23,7 @@ namespace FinalGroupProjectTeam8.Models
 
     public class RegisterViewModel
     {
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -38,11 +40,43 @@ namespace FinalGroupProjectTeam8.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        //TODO:  Add any fields that you need for creating a new user
-        //For example, first name
         [Required]
         [Display(Name = "First Name")]
         public string FName { get; set; }
+
+        [Required(ErrorMessage = "Please enter your Phone Number")]
+        //[RegularExpression("(/d/d/d)/d/d/d-/d/d/d/d",
+        //ErrorMessage = "Please enter a valid phone number number")]
+        [Display(Name = "Phone Number")]
+        public string PhoneNumber { get; set; }
+
+        [Display(Name = "Middle Initial")]
+        [Required(ErrorMessage = "Middle initial is required.")]
+        public String MiddleInitial { get; set; }
+
+        [Display(Name = "Last Name")]
+        [Required(ErrorMessage = "Last name is required.")]
+        public String LName { get; set; }
+
+        [Display(Name = "Birthday (month/day/year)")]
+        [Required(ErrorMessage = "Birthday is required.")]
+        public DateTime Birthday { get; set; }
+
+        [Display(Name = "Street Address")]
+        [Required(ErrorMessage = "Street is required.")]
+        public String Street { get; set; }
+
+        [Display(Name = "City")]
+        [Required(ErrorMessage = "City is required.")]
+        public String City { get; set; }
+
+        [Display(Name = "State")]
+        [Required(ErrorMessage = "State is required.")]
+        public String State { get; set; }
+
+        [Display(Name = "Zipcode")]
+        [Required(ErrorMessage = "Zipcode is required.")]
+        public String Zip { get; set; }
     }
 
     public class ResetPasswordViewModel

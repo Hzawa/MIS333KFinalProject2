@@ -26,7 +26,7 @@ namespace FinalGroupProjectTeam8.Models
         [Key]
         public String CustomerID { get; set; }
         [ForeignKey("CustomerID")]
-        public virtual Customer Customer { get; set; }
+        public virtual AppUser User { get; set; }
 
         // Each account has multiple transactions
         public ICollection<Transaction> Transactions { get; set; }

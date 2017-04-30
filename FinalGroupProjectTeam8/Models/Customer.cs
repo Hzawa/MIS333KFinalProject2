@@ -21,6 +21,5 @@ namespace FinalGroupProjectTeam8.Models
          */
 
         // Each customer can have many accounts
-        public ICollection<Account> Accounts { get; set; }
     }
 }

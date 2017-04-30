@@ -31,16 +31,12 @@ namespace FinalGroupProjectTeam8.Models
          */
 
         // Transactions are created by accounts
-        [Key]
         public String AccountID { get; set; }
         [ForeignKey("AccountID")]
         public virtual Account Account { get; set; }
 
         // A transaction may have a payee
-        [Key]
-        public String PayeeID { get; set; }
-        [ForeignKey("PayeeID")]
-        public virtual Payee Payee { get; set; }
+        //public virtual Payee Payee { get; set; }
 
         // A transaction may have multiple disputes
         public ICollection<Dispute> Disputes { get; set; }

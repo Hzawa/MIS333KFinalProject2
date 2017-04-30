@@ -10,49 +10,29 @@ using System.Collections.Generic;
 namespace FinalGroupProjectTeam8.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
+
+    public enum UserTypeEnum { Customer, Employee, Manager }
+
     public class AppUser : IdentityUser
     {
 
-        public enum UserTypeEnum { Customer, Employee, Manager }
-        public UserTypeEnum UserType { get; set; }
-
-        [Display(Name = "Member ID")]
-        public String BankUserID { get; set; }
-
+        // Bank user scalar and navigational properties
         [Display(Name = "First Name")]
         [Required(ErrorMessage = "First name is required.")]
-        public String FirstName { get; set; }
+        public String FName { get; set; }
 
         [Display(Name = "Middle Initial")]
-        [Required(ErrorMessage = "Middle initial is required.")]
         public String MiddleInitial { get; set; }
 
-        [Display(Name = "Email Address")]
-        [DataType(DataType.EmailAddress)]
-        [Required(ErrorMessage = "Email address is required.")]
-        [EmailAddress(ErrorMessage = "Please enter a valid email address.")]
-        public String EmailAddress { get; set; }
-
-        [Display(Name = "Password")]
-        [Required(ErrorMessage = "Password is required.")]
-        public String Password { get; set; }
-
-        /**
-         * Identity has build in phone number - ignore this for now
-         */
-        /* 
-        [Display(Name = "Phone Number")]
-        [DataType(DataType.PhoneNumber)]
-        [Required(ErrorMessage = "Phone number is required.")]
-        [Phone(ErrorMessage = "Please enter a valid phone number.")]
-        public String PhoneNumber { get; set; }
-        */
+        [Display(Name = "Last Name")]
+        [Required(ErrorMessage = "Last name is required.")]
+        public String LName { get; set; }
 
         [Display(Name = "Birthday")]
         [Required(ErrorMessage = "Birthday is required.")]
         public DateTime Birthday { get; set; }
 
-        [Display(Name = "Street")]
+        [Display(Name = "Street Address")]
         [Required(ErrorMessage = "Street is required.")]
         public String Street { get; set; }
 
@@ -67,6 +47,11 @@ namespace FinalGroupProjectTeam8.Models
         [Display(Name = "Zipcode")]
         [Required(ErrorMessage = "Zipcode is required.")]
         public String Zip { get; set; }
+
+        public UserTypeEnum UserType { get; set; }
+
+        public List<Account> Accounts { get; set; }
+
 
         //This method allows you to create a new user
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<AppUser> manager)

@@ -8,24 +8,46 @@
     <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+@*<body>
+        <div>
+            @Html.ActionLink("Savings Account", "Index", "SavingsAccounts", null, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Checking Account", "Index", "CheckingAccounts", null, new { @class = "btn btn-success" })
+            @Html.ActionLink("IRA", "Index", "IRAs", null, new { @class = "btn btn-danger" })
+            @Html.ActionLink("Stock Portfolio", "Index", "StockPortfolios", null, new { @class = "btn btn-danger" })
+        </div>
+    </body>*@
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Savings Account</h2>
+            <p>
+                Standard savings account that can be used to pay bills or purchase stocks. No limits per customer.
+            </p>
+            <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Apply For Savings Account</a></p>
+        </div>
+        <div class="col-md-6">
+            <h2>Checking Account</h2>
+            <p>Standard checking account that can be used to pay bills or purchase stocks. No limits per customer. Only standard transactions can be applied to checking account (deposit, withdrawal, and transfer). No limit per customer.</p>
+            <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Apply For Checking Account</a></p>
+        </div>
     </div>
 </div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Individual Retirement Account</h2>
+            <p>
+                A special type of account that customers can use to save for retirement. A customer must be less than 70 years old and contribute less than a maximum of $5000 to invest into an IRA. Maximum of 1 per customer.
+            </p>
+            <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Apply For IRA</a></p>
+        </div>
+        <div class="col-md-6">
+            <h2>Stock Portfolio</h2>
+            <p>Customers may use stock portfolios to buy and sell stocks and funds offered through Longhorn Bank. Maximum of 1 per customer.</p>
+            <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Apply For Stock Portfolio</a></p>
+        </div>
+    </div>
+</div>
+
