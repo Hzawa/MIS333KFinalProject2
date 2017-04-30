@@ -22,7 +22,7 @@ namespace FinalGroupProjectTeam8.Models
          */
         
         // A payee can be tied to multiple transactions
-        //public List<Transaction> Transactions { get; set; }
+        public virtual List<Transaction> Transactions { get; set; }
 
     }
 }

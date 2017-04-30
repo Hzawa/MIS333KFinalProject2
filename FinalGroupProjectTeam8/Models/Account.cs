@@ -29,7 +29,7 @@ namespace FinalGroupProjectTeam8.Models
         public virtual AppUser User { get; set; }
 
         // Each account has multiple transactions
-        public ICollection<Transaction> Transactions { get; set; }
+        public virtual List<Transaction> Transactions { get; set; }
 
     }
 }

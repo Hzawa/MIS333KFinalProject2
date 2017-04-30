@@ -36,10 +36,12 @@ namespace FinalGroupProjectTeam8.Models
         public virtual Account Account { get; set; }
 
         // A transaction may have a payee
-        //public virtual Payee Payee { get; set; }
+        public String PayeeID { get; set; }
+        [ForeignKey("PayeeID")]
+        public virtual Payee Payee { get; set; }
 
         // A transaction may have multiple disputes
-        public ICollection<Dispute> Disputes { get; set; }
+        public virtual List<Dispute> Disputes { get; set; }
 
     }
 }

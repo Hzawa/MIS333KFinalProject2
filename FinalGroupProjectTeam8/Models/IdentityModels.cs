@@ -50,7 +50,12 @@ namespace FinalGroupProjectTeam8.Models
 
         public UserTypeEnum UserType { get; set; }
 
-        public List<Account> Accounts { get; set; }
+        /*
+         * Navigational Properties
+         */
+
+        // Each user can have many accounts (move to customer level?)
+        public virtual List<Account> Accounts { get; set; }
 
 
         //This method allows you to create a new user
