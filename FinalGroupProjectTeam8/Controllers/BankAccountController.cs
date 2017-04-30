@@ -19,34 +19,34 @@ namespace FinalGroupProjectTeam8.Controllers
             return View();
         }
 
-        public SelectList GetAllBankAccounts(BankAccount @bankaccount)  //COMMITTEE ALREADY CHOSEN
-        {
-            //populate list of committees
-            var query = from c in db.BankAccounts
-                        orderby c.BankAccountID
-                        select c;
-            //create list and execute query
-            List<BankAccount> allBankAccounts = query.ToList();
+        //public SelectList GetAllBankAccounts(AppUser @appuser)  //COMMITTEE ALREADY CHOSEN
+        //{
+        //    //populate list of committees
+        //    var query = from c in db.BankAccounts
+        //                orderby c.Name
+        //                select c;
+        //    //create list and execute query
+        //    List<BankAccount> allBankAccounts = query.ToList();
 
-            //convert to select list
-            SelectList list = new SelectList(allBankAccounts, "BankAccountID", "Name", @bankaccount.BankAccount.Name);
-            return list;
-        }
+        //    //convert to select list
+        //    SelectList list = new SelectList(allBankAccounts, "BankAccountID", "AccountType", @appuser.BankAccounts.);
+        //    return list;
+        //}
 
-        public SelectList GetAllBankAccounts()  //NO COMMITTEE CHOOSEN
-        {
-            //create query to find all committees
-            var query = from c in db.Committees
-                        orderby c.CommitteeName
-                        select c;
-            //execute query and store in list
-            List<Committee> allCommittees = query.ToList();
+        //public SelectList GetAllBankAccounts()  //NO COMMITTEE CHOOSEN
+        //{
+        //    //create query to find all committees
+        //    var query = from c in db.BankAccounts
+        //                orderby c.Name
+        //                select c;
+        //    //execute query and store in list
+        //    List<BankAccount> allBankAccounts = query.ToList();
 
-            //convert list to select list format needed for HTML
-            SelectList allCommitteeslist = new SelectList(allCommittees, "CommitteeID", "CommitteeName");
+        //    //convert list to select list format needed for HTML
+        //    SelectList allBankAccountsList = new SelectList(allBankAccounts, "BankAccountID", "Name");
 
-            return allCommitteeslist;
-        }
+        //    return allBankAccountsList;
+        //}
 
 
         //
