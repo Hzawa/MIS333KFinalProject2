@@ -10,7 +10,14 @@ namespace FinalGroupProjectTeam8.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            bool loggedIn = System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
+            if (loggedIn) {
+                // If logged in, redirect to user home page
+                return RedirectToAction("Home", "User");
+            } else {
+                // Otherwise continue as normal
+                return View();
+            }
         }
 
         public ActionResult About()
