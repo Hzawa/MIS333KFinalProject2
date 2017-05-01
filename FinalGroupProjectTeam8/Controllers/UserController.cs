@@ -37,7 +37,7 @@ namespace FinalGroupProjectTeam8.Controllers
         }
 
         public ActionResult ApplyForAccount() {
-            return RedirectToAction("Apply", "BankAccount");
+            return RedirectToAction("Register", "BankAccount");
         }
     }
 }

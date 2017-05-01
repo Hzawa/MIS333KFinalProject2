@@ -14,7 +14,7 @@ namespace FinalGroupProjectTeam8.Controllers
         private AppDbContext db = new AppDbContext();
 
         // GET: /Account/Register
-        [AllowAnonymous]
+        //[Authorize(Roles = "Admin")]
         public ActionResult Register()
         {
             return View();
