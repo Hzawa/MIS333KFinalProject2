@@ -14,7 +14,7 @@ namespace FinalGroupProjectTeam8.Controllers
         private AppDbContext db = new AppDbContext();
 
         // GET: /Account/Register
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Customer, Manager, Employee")]
         public ActionResult Register()
         {
             return View();
