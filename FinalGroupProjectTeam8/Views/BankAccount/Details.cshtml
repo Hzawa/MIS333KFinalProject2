@@ -1,0 +1,44 @@
+﻿@model FinalGroupProjectTeam8.Models.BankAccountDetailsViewModel
+@{
+    ViewBag.Title = "Account Details";
+}
+
+
+<!-- Show balance -->
+<h2>Account: @Model.BankAccount.Name</h2>
+<h3>Balance: @Model.BankAccount.Balance</h3>
+
+<!-- Show list of transactions -->
+<p>
+    @Html.ActionLink("Create new transaction", "Create", "Transactions")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Transactions.First().Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Transactions.First().Amount)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Transactions)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", "Transactions", new { TransactionID = item.TransactionID }, null)
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+

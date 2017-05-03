@@ -20,17 +20,8 @@ namespace FinalGroupProjectTeam8.Controllers
             }
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
+        public ActionResult Error(String ErrorMessage) {
+            ViewBag.ErrorMessage = ErrorMessage;
             return View();
         }
     }

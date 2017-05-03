@@ -30,5 +30,10 @@ namespace FinalGroupProjectTeam8.Models
         // Each account has multiple transactions
         public virtual List<Transaction> Transactions { get; set; }
 
+        // ShortID for displaying ID with last 4 characters
+        public String ShortBankAccountID {
+            get { return BankAccountID.Substring(Math.Max(0, BankAccountID.Length - 4)); }
+        }
+
     }
 }
