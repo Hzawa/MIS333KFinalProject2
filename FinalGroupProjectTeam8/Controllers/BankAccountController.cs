@@ -104,25 +104,47 @@ namespace FinalGroupProjectTeam8.Controllers
             return View();
         }
 
-        //define method
-        //public SelectList GeetAllBankAccountIds()
-        //{
-        //    //find the list of account numbers
-        //    var query = from a in db.BankAccounts
-        //                orderby a.BankAccountID
-        //                select a;
+        public ActionResult Details(String BankAccountID) {
 
-        //    //convert to list and execute query
-        //    List<BankAccount> allBankAccounts = query.ToList();
+            // Query for given bank account ID
+            var accounts = from a in db.BankAccounts
+                           where a.BankAccountID.Equals(BankAccountID)
+                           select a;
 
-        //    //create list of selected bank account IDs
-        //    List<Int32> SelectedBankAccounts = new List<Int32>();
+            // If it doesn't exist, return 404
+            if (accounts.Count() == 0) {
+                return RedirectToAction("Error", "Home", new { ErrorMessage = "Account does not exist." });
+            }
+            BankAccount BankAccount = accounts.First();
 
-        //    //convert list to select list format needed for HTML
-        //    SelectList allBankAccountsList = new SelectList(allBankAccounts, "BankAccountID", "Name");
+            // Ensure it belongs to current user
+            string UserId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            if (BankAccount.UserID != UserId) {
+                return RedirectToAction("Error", "Home", new { ErrorMessage = "This is not your account." });
+            }
 
-        //    return allBankAccountsList;
-        //}
+            // Get transactions associated with this bank account
+            var transactions = from t in db.Transactions
+                               where t.BankAccountID == BankAccount.BankAccountID
+                               select t;
+
+            // Create the ViewModel
+            var model = new BankAccountDetailsViewModel { BankAccount = BankAccount, Transactions = transactions.ToList() };
+
+            // Otherwise we're good, make any changes we need to
+            if (BankAccount.AccountType == BankAccount.BankAccountTypeEnum.CheckingAccount) {
+                
+            } else if (BankAccount.AccountType == BankAccount.BankAccountTypeEnum.SavingsAccount) {
+
+            } else if (BankAccount.AccountType == BankAccount.BankAccountTypeEnum.IRA) {
+
+            } else if (BankAccount.AccountType == BankAccount.BankAccountTypeEnum.StockPortfolio) {
+
+            }
+
+            // First, ensure this bank account belongs to current customer
+            return View(model);
+        }
 
     }
 }

@@ -37,7 +37,7 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.BankAccountID)
+                @Html.DisplayFor(modelItem => item.ShortBankAccountID)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -52,9 +52,7 @@
                 @Html.DisplayFor(modelItem => item.AccountType)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", "BankAccount", new { id = item.BankAccountID }) |
-                @Html.ActionLink("Details", "Details", "BankAccount", new { id = item.BankAccountID }) |
-                @Html.ActionLink("Delete", "Delete", "BankAccount", new { id = item.BankAccountID })
+                @Html.ActionLink("Details", "Details", "BankAccount", new {BankAccountID = item.BankAccountID}, null)
             </td>
         </tr>
     }
