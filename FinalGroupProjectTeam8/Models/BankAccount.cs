@@ -13,7 +13,7 @@ namespace FinalGroupProjectTeam8.Models
         public enum BankAccountTypeEnum { CheckingAccount, SavingsAccount, IRA, StockPortfolio }
         public BankAccountTypeEnum AccountType { get; set; }
 
-        public String BankAccountID { get; set; }
+        public Int32 BankAccountID { get; set; }
         public String Name { get; set; }
         public Decimal Balance { get; set; }
         public Boolean Active { get; set; }

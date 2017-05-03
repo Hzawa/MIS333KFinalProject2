@@ -14,7 +14,7 @@ namespace FinalGroupProjectTeam8.Controllers
         private AppDbContext db = new AppDbContext();
 
         // GET: /Account/Register
-        [Authorize(Roles = "Customer, Manager, Employee")]
+        [Authorize(Roles = "BankUser, Manager, Employee")]
         public ActionResult Register()
         {
             return View();
@@ -25,13 +25,18 @@ namespace FinalGroupProjectTeam8.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register([Bind(Include = "AccountType, Name, Balance")] BankAccount BankAccount)
+        public ActionResult Register([Bind(Include = "BankAccountID, AccountType, Name, Balance")] BankAccount BankAccount)
         {
             if (ModelState.IsValid)
             {
                 // Setting the UserID
                 string UserId = System.Web.HttpContext.Current.User.Identity.GetUserId();
                 BankAccount.UserID = UserId;
+
+                //Set PK value
+                //BankAccount.BankAccountID = 1000020;
+                //BankAccount bankAccountToChange = db.BankAccounts.Max(allBankAccountsList);
+
 
                 // Different behavior and checks depending on account type
                 BankAccount.BankAccountTypeEnum BankAccountType = BankAccount.AccountType;
@@ -75,11 +80,38 @@ namespace FinalGroupProjectTeam8.Controllers
 
                 // Adding the object to the DB
                 db.BankAccounts.Add(BankAccount);
+
+                // Ensure we get the right primary key
+                var id = db.BankAccounts.OrderByDescending(b => b.BankAccountID).FirstOrDefault();
+                int nextId = Convert.ToInt32(id);
+                BankAccount.BankAccountID = nextId;
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             return View(BankAccount);
-        }      
+        }
+
+        //define method
+        //public SelectList GeetAllBankAccountIds()
+        //{
+        //    //find the list of account numbers
+        //    var query = from a in db.BankAccounts
+        //                orderby a.BankAccountID
+        //                select a;
+
+        //    //convert to list and execute query
+        //    List<BankAccount> allBankAccounts = query.ToList();
+
+        //    //create list of selected bank account IDs
+        //    List<Int32> SelectedBankAccounts = new List<Int32>();
+
+        //    //convert list to select list format needed for HTML
+        //    SelectList allBankAccountsList = new SelectList(allBankAccounts, "BankAccountID", "Name");
+
+        //    return allBankAccountsList;
+        //}
+
     }
 }
