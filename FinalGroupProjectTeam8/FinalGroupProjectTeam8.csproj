@@ -318,6 +318,18 @@
     <Compile Include="Migrations\201704302216539_test3.Designer.cs">
       <DependentUpon>201704302216539_test3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705031625171_new.cs" />
+    <Compile Include="Migrations\201705031625171_new.Designer.cs">
+      <DependentUpon>201705031625171_new.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705031752225_mostRecent2.cs" />
+    <Compile Include="Migrations\201705031752225_mostRecent2.Designer.cs">
+      <DependentUpon>201705031752225_mostRecent2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705031804489_mostRecent21.cs" />
+    <Compile Include="Migrations\201705031804489_mostRecent21.Designer.cs">
+      <DependentUpon>201705031804489_mostRecent21.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BankAccount.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -379,6 +391,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704302216539_test3.resx">
       <DependentUpon>201704302216539_test3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705031625171_new.resx">
+      <DependentUpon>201705031625171_new.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705031752225_mostRecent2.resx">
+      <DependentUpon>201705031752225_mostRecent2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705031804489_mostRecent21.resx">
+      <DependentUpon>201705031804489_mostRecent21.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="obj\Debug\FinalGroupProjectTeam8.Migrations.initialSetup.resources" />
     <EmbeddedResource Include="obj\Debug\FinalGroupProjectTeam8.Migrations.test1.resources" />
