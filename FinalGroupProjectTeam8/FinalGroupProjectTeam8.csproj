@@ -342,8 +342,11 @@
     <Content Include="Views\Transactions\Details.cshtml" />
     <Content Include="Views\Transactions\Edit.cshtml" />
     <Content Include="Views\Transactions\Index.cshtml" />
-    <Content Include="Views\Transactions\Search.cshtml" />
-    <Content Include="Views\Transactions\SearchResults.cshtml" />
+    <Content Include="Views\Transactions\CreateDeposit.cshtml" />
+    <Content Include="Views\Transactions\CreateWithdrawal.cshtml" />
+    <Content Include="Views\Transactions\CreateTransfer.cshtml" />
+    <Content Include="Views\Transactions\CreateTransaction.cshtml" />
+    <Content Include="Views\Transactions\CreatePayment.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
