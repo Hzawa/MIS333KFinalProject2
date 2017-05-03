@@ -66,6 +66,7 @@ namespace FinalGroupProjectTeam8.Controllers
                             // Manager must approve if deposit > $5000    
                         }
                     }
+
                     //If account is checkings or savings provide default name
                     if (BankAccountType == BankAccount.BankAccountTypeEnum.CheckingAccount)
                     {
