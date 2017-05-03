@@ -14,6 +14,14 @@ namespace FinalGroupProjectTeam8.Controllers
     {
         private AppDbContext db = new AppDbContext();
 
+        public ActionResult Search() {
+            return View();
+        }
+
+        public ActionResult SearchResults() {
+            return View();
+        }
+
         // GET: Transactions
         public ActionResult Index()
         {
@@ -39,7 +47,7 @@ namespace FinalGroupProjectTeam8.Controllers
         // GET: Transactions/Create
         public ActionResult Create()
         {
-            ViewBag.BankAccountID = new SelectList(db.BankAccounts, "CustomerID", "BankAccountID");
+            ViewBag.BankAccountID = new SelectList(db.BankAccounts, "BankAccountID", "Name");
             ViewBag.TransactionID = new SelectList(db.Disputes, "TransactionID", "DisputeID");
             ViewBag.PayeeID = new SelectList(db.Payees, "PayeeID", "Name");
             return View();
@@ -59,7 +67,7 @@ namespace FinalGroupProjectTeam8.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.BankAccountID = new SelectList(db.BankAccounts, "CustomerID", "BankAccountID", transaction.BankAccountID);
+            ViewBag.BankAccountID = new SelectList(db.BankAccounts, "BankAccountID", "Name", transaction.BankAccountID);
             ViewBag.TransactionID = new SelectList(db.Disputes, "TransactionID", "DisputeID", transaction.TransactionID);
             ViewBag.PayeeID = new SelectList(db.Payees, "PayeeID", "Name", transaction.PayeeID);
             return View(transaction);
@@ -77,7 +85,7 @@ namespace FinalGroupProjectTeam8.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.BankAccountID = new SelectList(db.BankAccounts, "CustomerID", "BankAccountID", transaction.BankAccountID);
+            ViewBag.BankAccountID = new SelectList(db.BankAccounts, "BankAccountID", "Name", transaction.BankAccountID);
             ViewBag.TransactionID = new SelectList(db.Disputes, "TransactionID", "DisputeID", transaction.TransactionID);
             ViewBag.PayeeID = new SelectList(db.Payees, "PayeeID", "Name", transaction.PayeeID);
             return View(transaction);
@@ -96,7 +104,7 @@ namespace FinalGroupProjectTeam8.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.BankAccountID = new SelectList(db.BankAccounts, "CustomerID", "BankAccountID", transaction.BankAccountID);
+            ViewBag.BankAccountID = new SelectList(db.BankAccounts, "BankAccountID", "Name", transaction.BankAccountID);
             ViewBag.TransactionID = new SelectList(db.Disputes, "TransactionID", "DisputeID", transaction.TransactionID);
             ViewBag.PayeeID = new SelectList(db.Payees, "PayeeID", "Name", transaction.PayeeID);
             return View(transaction);
