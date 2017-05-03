@@ -7,13 +7,13 @@ namespace FinalGroupProjectTeam8.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class mostRecent21 : IMigrationMetadata
+    public sealed partial class Mig1 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(mostRecent21));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Mig1));
         
         string IMigrationMetadata.Id
         {
-            get { return "201705031804489_mostRecent21"; }
+            get { return "201705031918392_Mig1"; }
         }
         
         string IMigrationMetadata.Source

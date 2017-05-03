@@ -244,17 +244,11 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="ClassDiagram1.cd" />
-    <Content Include="obj\Debug\FinalGroupProjectTeam8.csproj.FileListAbsolute.txt" />
-    <Content Include="obj\Debug\FinalGroupProjectTeam8.dll" />
-    <Content Include="obj\Debug\FinalGroupProjectTeam8.pdb" />
     <Content Include="packages.config" />
     <Content Include="bin\FinalGroupProjectTeam8.dll.config" />
     <Content Include="bin\roslyn\Microsoft.CSharp.Core.targets" />
     <Content Include="bin\roslyn\Microsoft.VisualBasic.Core.targets" />
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
-    <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
-    <Content Include="obj\Debug\FinalGroupProjectTeam8.csproj.GenerateResource.Cache" />
-    <Content Include="obj\Debug\FinalGroupProjectTeam8.csprojResolveAssemblyReference.cache" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -302,33 +296,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201704232027388_initialSetup.cs" />
-    <Compile Include="Migrations\201704232027388_initialSetup.Designer.cs">
-      <DependentUpon>201704232027388_initialSetup.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704232042284_test1.cs" />
-    <Compile Include="Migrations\201704232042284_test1.Designer.cs">
-      <DependentUpon>201704232042284_test1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704300217112_test2.cs" />
-    <Compile Include="Migrations\201704300217112_test2.Designer.cs">
-      <DependentUpon>201704300217112_test2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704302216539_test3.cs" />
-    <Compile Include="Migrations\201704302216539_test3.Designer.cs">
-      <DependentUpon>201704302216539_test3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705031625171_new.cs" />
-    <Compile Include="Migrations\201705031625171_new.Designer.cs">
-      <DependentUpon>201705031625171_new.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705031752225_mostRecent2.cs" />
-    <Compile Include="Migrations\201705031752225_mostRecent2.Designer.cs">
-      <DependentUpon>201705031752225_mostRecent2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705031804489_mostRecent21.cs" />
-    <Compile Include="Migrations\201705031804489_mostRecent21.Designer.cs">
-      <DependentUpon>201705031804489_mostRecent21.cs</DependentUpon>
+    <Compile Include="Migrations\201705031918392_Mig1.cs" />
+    <Compile Include="Migrations\201705031918392_Mig1.Designer.cs">
+      <DependentUpon>201705031918392_Mig1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BankAccount.cs" />
@@ -355,6 +325,9 @@
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Release\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -368,6 +341,7 @@
     <Content Include="Views\Transactions\Index.cshtml" />
     <Content Include="Views\User\Home.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\BankAccount\ApplicationSuccess.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -377,34 +351,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201704232027388_initialSetup.resx">
-      <DependentUpon>201704232027388_initialSetup.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705031918392_Mig1.resx">
+      <DependentUpon>201705031918392_Mig1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704232042284_test1.resx">
-      <DependentUpon>201704232042284_test1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704300217112_test2.resx">
-      <DependentUpon>201704300217112_test2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704302216539_test3.resx">
-      <DependentUpon>201704302216539_test3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705031625171_new.resx">
-      <DependentUpon>201705031625171_new.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705031752225_mostRecent2.resx">
-      <DependentUpon>201705031752225_mostRecent2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705031804489_mostRecent21.resx">
-      <DependentUpon>201705031804489_mostRecent21.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="obj\Debug\FinalGroupProjectTeam8.Migrations.initialSetup.resources" />
-    <EmbeddedResource Include="obj\Debug\FinalGroupProjectTeam8.Migrations.test1.resources" />
-    <EmbeddedResource Include="obj\Debug\FinalGroupProjectTeam8.Migrations.test2.resources" />
-    <EmbeddedResource Include="obj\Debug\FinalGroupProjectTeam8.Migrations.test3.resources" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -78,19 +78,29 @@ namespace FinalGroupProjectTeam8.Controllers
 
                 }
 
+                // Ensure we get the right primary key
+                var idObject = db.BankAccounts.OrderByDescending(b => b.BankAccountID).FirstOrDefault();
+                if (idObject == null) BankAccount.BankAccountID = "1000000000";
+                else {
+                    int nextId = Convert.ToInt32(idObject.BankAccountID) + 1;
+                    String nextIdString = nextId.ToString();
+                    BankAccount.BankAccountID = nextIdString;
+                }
+
                 // Adding the object to the DB
                 db.BankAccounts.Add(BankAccount);
-
-                // Ensure we get the right primary key
-                var id = db.BankAccounts.OrderByDescending(b => b.BankAccountID).FirstOrDefault();
-                int nextId = Convert.ToInt32(id);
-                BankAccount.BankAccountID = nextId;
-
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                // Redirect to the right page
+                return RedirectToAction("ApplicationSuccess");
             }
 
             return View(BankAccount);
+        }
+
+        public ActionResult ApplicationSuccess()
+        {
+            return View();
         }
 
         //define method
