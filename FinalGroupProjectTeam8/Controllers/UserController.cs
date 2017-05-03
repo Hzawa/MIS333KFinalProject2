@@ -22,16 +22,16 @@ namespace FinalGroupProjectTeam8.Controllers
                 // If not logged in, redirect to home page
                 return RedirectToAction("Index", "Home");
             } else {
-                // Otherwise, stay here
+                //Otherwise, stay here
 
                 // Let's get a list of accounts to add to ViewBag
                 var customerId = 1;
                 var accounts = from a in db.BankAccounts
-                               where a.CustomerID.Equals(customerId)
+                               where a.UserID.Equals(customerId)
                                select a;
                 ViewBag.Accounts = accounts;
 
-                // Finally, return the view
+                //Finally, return the view
                 return View();
             }
         }
