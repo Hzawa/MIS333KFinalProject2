@@ -208,61 +208,70 @@ public ActionResult Search() {
         }
 
         //GET: Transactions/Deposit
+        [HttpGet]
+
         public ActionResult CreateDeposit() {
            
             // The actual view to create a deposit
-            return View("Transaction/CreateDeposit");
+            return View();
         }
         //POST: Transactions/Deposit
+        [HttpPost]
         public ActionResult CreateDeposit(Deposit deposit)
         {
 
             // The actual view to create a deposit
-            return View("Transaction/CreateDeposit");
+            return View();
         }
 
         //GET: Transactions/Withdrawal
+        [HttpGet]
         public ActionResult CreateWithdrawal()
         {
 
             // The actual view to create withdrawal
-            return View("Transaction/CreateWithdrawal");
+            return View();
         }
         //POST: Transactions/Withdrawal
+        [HttpPost]
         public ActionResult CreateWithrawal(Withdrawal withdrawal, BankAccount.BankAccountTypeEnum from)
         {
 
             // The actual view to create withdrawal
-            return View("Transaction/CreateWithdrawal");
+            return View();
         }
 
         //GET: Transactions/Transfer
+        [HttpGet]
         public ActionResult CreateTransfer()
         {
 
             // The actual view to create transfer
-            return View("Transaction/CreateTransfer");
+            return View();
         }
         //POST: Transactions/Transfer
+        [HttpPost]
         public ActionResult CreateTransfer(Transfer transfer, BankAccount.BankAccountTypeEnum from, BankAccount.BankAccountTypeEnum to)
         {
 
             // The actual view to create transfer
-            return View("Transaction/CreateTransfer");
+            return View();
         }
 
-        public ActionResult CreateBillPayment()
+        [HttpGet]
+        public ActionResult CreatePayment()
         {
 
             // The actual view to create transfer
-            return View("Transaction/CreatePayment");
+            return View();
         }
         //POST: Transactions/Deposit
-        public ActionResult CreateBillPayment(Payment payment, Payee payee)
+        [HttpPost]
+        public ActionResult CreatePayment(Payment payment, Payee payee)
         {
 
             // The actual view to create transfer
-            return View("Transaction/CreatePayment");
+            return View();
         }
 
         // GET: Transactions/Create
