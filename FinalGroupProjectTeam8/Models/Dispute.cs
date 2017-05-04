@@ -7,10 +7,15 @@ using System.Web;
 
 namespace FinalGroupProjectTeam8.Models
 {
+
+    public enum DisputeTypeEnum { Submitted, Accepted, Rejected, Adjusted }
+
     public class Dispute
     {
         public String DisputeID { get; set; }
         public String Comments { get; set; }
+        public DisputeTypeEnum DisputeType { get; set; }
+        public int CorrentAmount { get; set; }
 
         /**
          * Navigational Properties

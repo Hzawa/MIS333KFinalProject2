@@ -71,6 +71,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Transactions.First().TransactionStatus)
         </th>
+        <th>
+            Other Notes
+        </th>
         <th></th>
     </tr>
 
@@ -88,6 +91,14 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TransactionStatus)
+            </td>
+            <td>
+                @if (item.TransactionType == FinalGroupProjectTeam8.Models.Transaction.TransactionTypeEnum.Transfer) {
+                    @:Sent from @item.BankAccountID to @((FinalGroupProjectTeam8.Models.Transfer) item).ReceivingBankAccountID
+                } else
+                {
+                    @:Standard Transaction
+                }
             </td>
             <td>
                 @Html.ActionLink("Details", "Details", "Transactions", new { TransactionID = item.TransactionID }, null)
