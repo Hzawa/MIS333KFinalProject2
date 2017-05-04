@@ -245,7 +245,7 @@ namespace FinalGroupProjectTeam8.Controllers
             }
 
             // Any changes
-            if (deposit.Amount > 1000)
+            if (deposit.Amount > 5000)
             {
                 deposit.TransactionStatus = Transaction.TransactionStatusEnum.Pending;
             }
@@ -409,7 +409,6 @@ namespace FinalGroupProjectTeam8.Controllers
                 return RedirectToAction("Details", "BankAccount", new { BankAccountID = transfer.BankAccountID });
             } else
             {
-                String errorString = "";
                 foreach (ModelState modelState in ViewData.ModelState.Values)
                 {
                     foreach (ModelError error in modelState.Errors)

@@ -325,6 +325,10 @@
     <Compile Include="Migrations\201705040512529_mostRecent5.Designer.cs">
       <DependentUpon>201705040512529_mostRecent5.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705040533151_mostRecent6.cs" />
+    <Compile Include="Migrations\201705040533151_mostRecent6.Designer.cs">
+      <DependentUpon>201705040533151_mostRecent6.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\AddAccounts.cs" />
     <Compile Include="Migrations\AddCustomers.cs" />
     <Compile Include="Migrations\Configuration.cs" />
@@ -404,6 +408,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705040512529_mostRecent5.resx">
       <DependentUpon>201705040512529_mostRecent5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705040533151_mostRecent6.resx">
+      <DependentUpon>201705040533151_mostRecent6.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -33,25 +33,33 @@ namespace FinalGroupProjectTeam8.Controllers
                 string UserId = System.Web.HttpContext.Current.User.Identity.GetUserId();
                 BankAccount.UserID = UserId;
 
-                //Set PK value
-                //BankAccount.BankAccountID = 1000020;
-                //BankAccount bankAccountToChange = db.BankAccounts.Max(allBankAccountsList);
-
-
                 // Different behavior and checks depending on account type
                 BankAccount.BankAccountTypeEnum BankAccountType = BankAccount.AccountType;
-                if (BankAccountType == BankAccount.BankAccountTypeEnum.IRA)
+                if (BankAccountType == BankAccount.BankAccountTypeEnum.IRA || BankAccountType == BankAccount.BankAccountTypeEnum.StockPortfolio)
                 {
 
                     // Check if this user already has an IRA account
                     var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-                    var accounts = from a in db.BankAccounts
+                    var iraaccounts = from a in db.BankAccounts
                                    where a.UserID.Equals(userId)
-                                   where a.AccountType.Equals(BankAccountType)
+                                   where a.AccountType.Equals(BankAccount.BankAccountTypeEnum.IRA)
                                    select a;
 
                     // If we have any results, that means this user already has an IRA account
-                    if (accounts.Count() > 0)
+                    if (iraaccounts.Count() > 1)
+                    {
+                        // Redirect
+
+                    }
+
+                    // Check if this user already has stock portfolio
+                    var stockaccounts = from a in db.BankAccounts
+                                      where a.UserID.Equals(userId)
+                                      where a.AccountType.Equals(BankAccount.BankAccountTypeEnum.IRA)
+                                      select a;
+
+                    // If we have any results, that means this user already has an IRA account
+                    if (stockaccounts.Count() > 1)
                     {
                         // Redirect
 
