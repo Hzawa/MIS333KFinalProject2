@@ -56,6 +56,8 @@ namespace FinalGroupProjectTeam8.Models
 
         // Each user can have many accounts (move to customer level?)
         public virtual List<BankAccount> BankAccounts { get; set; }
+        // Each user can have many payees
+        public virtual List<Payee> Payees { get; set; }
 
 
         //This method allows you to create a new user
