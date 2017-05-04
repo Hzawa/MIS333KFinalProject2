@@ -300,6 +300,14 @@
     <Compile Include="Migrations\201705031918392_Mig1.Designer.cs">
       <DependentUpon>201705031918392_Mig1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705032352211_mig.cs" />
+    <Compile Include="Migrations\201705032352211_mig.Designer.cs">
+      <DependentUpon>201705032352211_mig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705040002517_mi4.cs" />
+    <Compile Include="Migrations\201705040002517_mi4.Designer.cs">
+      <DependentUpon>201705040002517_mi4.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BankAccount.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -341,6 +349,11 @@
     <Content Include="Views\Transactions\SearchResults.cshtml" />
     <Content Include="Views\BankAccount\Details.cshtml" />
     <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\Transactions\CreateDeposit.cshtml" />
+    <Content Include="Views\Transactions\CreatePayment.cshtml" />
+    <Content Include="Views\Transactions\CreateTransaction.cshtml" />
+    <Content Include="Views\Transactions\CreateTransfer.cshtml" />
+    <Content Include="Views\Transactions\CreateWithdrawal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -354,6 +367,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201705031918392_Mig1.resx">
       <DependentUpon>201705031918392_Mig1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705032352211_mig.resx">
+      <DependentUpon>201705032352211_mig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705040002517_mi4.resx">
+      <DependentUpon>201705040002517_mi4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

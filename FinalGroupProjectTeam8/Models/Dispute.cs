@@ -17,7 +17,6 @@ namespace FinalGroupProjectTeam8.Models
          */
         
         // Each dispute belongs to one transaction
-        [Key]
         public String TransactionID { get; set; }
         [ForeignKey("TransactionID")]
         public virtual Transaction Transaction { get; set; }

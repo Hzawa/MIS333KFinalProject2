@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using FinalGroupProjectTeam8.Models;
+using Microsoft.AspNet.Identity;
+using System.Data.Entity.Validation;
 
 namespace FinalGroupProjectTeam8.Controllers
 {
@@ -211,7 +213,14 @@ public ActionResult Search() {
         [HttpGet]
 
         public ActionResult CreateDeposit() {
-           
+
+            // We need a list of bank accounts to deposit to
+            var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var accounts = from a in db.BankAccounts
+                           where a.UserID.Equals(userId)
+                           select a;
+            ViewBag.BankAccountID = new SelectList(accounts, "BankAccountID", "Name");
+
             // The actual view to create a deposit
             return View();
         }
@@ -219,6 +228,42 @@ public ActionResult Search() {
         [HttpPost]
         public ActionResult CreateDeposit(Deposit deposit)
         {
+            if (ModelState.IsValid)
+            {
+                
+                try
+                {
+                    // Your code...
+                    // Could also be before try if you know the exception occurs in SaveChanges
+                    db.Transactions.Add(deposit);
+                    db.SaveChanges();
+                }
+                catch (DbEntityValidationException e)
+                {
+                    foreach (var eve in e.EntityValidationErrors)
+                    {
+                        Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                            eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                        foreach (var ve in eve.ValidationErrors)
+                        {
+                            Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                                ve.PropertyName, ve.ErrorMessage);
+                        }
+                    }
+                } catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                }
+                
+                return RedirectToAction("Index");
+            }
+
+            // We need a list of bank accounts to deposit to
+            var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var accounts = from a in db.BankAccounts
+                           where a.UserID.Equals(userId)
+                           select a;
+            ViewBag.BankAccountID = new SelectList(accounts, "BankAccountID", "Name");
 
             // The actual view to create a deposit
             return View();
