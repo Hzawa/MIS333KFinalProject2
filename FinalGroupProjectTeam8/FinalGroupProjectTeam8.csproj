@@ -290,48 +290,19 @@
     <Compile Include="Controllers\BankAccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PayeeController.cs" />
     <Compile Include="Controllers\RoleAdminController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="EmailMessaging.cs" />
+    <Compile Include="Migrations\201705042223550_Initial.cs" />
+    <Compile Include="Migrations\201705042223550_Initial.Designer.cs">
+      <DependentUpon>201705042223550_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Utility\EmailMessaging.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201705031918392_Mig1.cs" />
-    <Compile Include="Migrations\201705031918392_Mig1.Designer.cs">
-      <DependentUpon>201705031918392_Mig1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705040039433_Seed.cs" />
-    <Compile Include="Migrations\201705040039433_Seed.Designer.cs">
-      <DependentUpon>201705040039433_Seed.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705040041385_Seed1.cs" />
-    <Compile Include="Migrations\201705040041385_Seed1.Designer.cs">
-      <DependentUpon>201705040041385_Seed1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705040104079_mig9.cs" />
-    <Compile Include="Migrations\201705040104079_mig9.Designer.cs">
-      <DependentUpon>201705040104079_mig9.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705040108030_mig10.cs" />
-    <Compile Include="Migrations\201705040108030_mig10.Designer.cs">
-      <DependentUpon>201705040108030_mig10.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705040442460_mostRecent4.cs" />
-    <Compile Include="Migrations\201705040442460_mostRecent4.Designer.cs">
-      <DependentUpon>201705040442460_mostRecent4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705040512529_mostRecent5.cs" />
-    <Compile Include="Migrations\201705040512529_mostRecent5.Designer.cs">
-      <DependentUpon>201705040512529_mostRecent5.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705040533151_mostRecent6.cs" />
-    <Compile Include="Migrations\201705040533151_mostRecent6.Designer.cs">
-      <DependentUpon>201705040533151_mostRecent6.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\AddAccounts.cs" />
-    <Compile Include="Migrations\AddCustomers.cs" />
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BankAccount.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BankAccountDetailsViewModel.cs" />
@@ -373,10 +344,14 @@
     <Content Include="Views\BankAccount\Details.cshtml" />
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\Transactions\CreateDeposit.cshtml" />
-    <Content Include="Views\Transactions\CreatePayment.cshtml" />
+    <Content Include="Views\Payee\CreatePayment.cshtml" />
     <Content Include="Views\Transactions\CreateTransaction.cshtml" />
     <Content Include="Views\Transactions\CreateTransfer.cshtml" />
     <Content Include="Views\Transactions\CreateWithdrawal.cshtml" />
+    <Content Include="Views\Payee\Index.cshtml" />
+    <Content Include="Views\Payee\Home.cshtml" />
+    <Content Include="Views\Payee\CreatePayee.cshtml" />
+    <Content Include="Views\Payee\ApplicationSuccess.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -388,29 +363,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705031918392_Mig1.resx">
-      <DependentUpon>201705031918392_Mig1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705040039433_Seed.resx">
-      <DependentUpon>201705040039433_Seed.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705040041385_Seed1.resx">
-      <DependentUpon>201705040041385_Seed1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705040104079_mig9.resx">
-      <DependentUpon>201705040104079_mig9.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705040108030_mig10.resx">
-      <DependentUpon>201705040108030_mig10.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705040442460_mostRecent4.resx">
-      <DependentUpon>201705040442460_mostRecent4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705040512529_mostRecent5.resx">
-      <DependentUpon>201705040512529_mostRecent5.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705040533151_mostRecent6.resx">
-      <DependentUpon>201705040533151_mostRecent6.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705042223550_Initial.resx">
+      <DependentUpon>201705042223550_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

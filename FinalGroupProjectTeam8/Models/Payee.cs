@@ -12,12 +12,19 @@ namespace FinalGroupProjectTeam8.Models
     {
 
         public String PayeeID { get; set; }
+        [Required]
         public PayeeType Type { get; set; }
+        [Required]
         public String Name { get; set; }
+        [Required]
         public String Street { get; set; }
+        [Required]
         public String City { get; set; }
+        [Required]
         public String State { get; set; }
+        [Required]
         public String Zip { get; set; }
+        [Required]
         public String PhoneNumber { get; set; }
 
         /**

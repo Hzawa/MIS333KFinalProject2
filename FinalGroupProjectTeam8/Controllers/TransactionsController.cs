@@ -41,7 +41,7 @@ namespace FinalGroupProjectTeam8.Controllers
         }
 
         //advanced search method
-        public ActionResult SearchResults(String SearchString, String Description/*, Transaction.TransactionTypeEnum SelectedTransaction, Decimal Amount, String TransactionID, DateTime Date, SortOrder SelectedSortOrder*/)
+        public ActionResult SearchResults(String SearchString, String Description/*, TransactonTypeEnum SelectedTransaction, Decimal Amount, String TransactionID, DateTime Date, SortOrder SelectedSortOrder*/)
         {
             List<Transaction> SelectedTransactions = new List<Transaction>();
             List<Transaction> AllTransactions = db.Transactions.ToList();
@@ -61,13 +61,14 @@ namespace FinalGroupProjectTeam8.Controllers
             }
 
             ////Transaction drop down list
-            //if (SelectedTransaction == 0)
+            //switch (SelectedTransaction)
             //{
-            //    //query = query
-            //}
-            //else
-            //{
-            //    query = query.Where(t => t.TransactionType == SelectedTransaction);
+            //    case TransactionType.All:
+            //        //query = query 
+            //        break;
+            //    case TransactionType.Bill:
+            //        query = query.Where(t => t.TransactionType == Transaction.TransactionTypeEnum.);
+            //        break;
             //}
 
             //Code for radio buttons

@@ -3,7 +3,7 @@ namespace FinalGroupProjectTeam8.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Mig1 : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -53,29 +53,35 @@ namespace FinalGroupProjectTeam8.Migrations
                     {
                         TransactionID = c.String(nullable: false, maxLength: 128),
                         TransactionType = c.Int(nullable: false),
+                        TransactionStatus = c.Int(nullable: false),
                         Description = c.String(nullable: false),
                         Amount = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Comments = c.String(),
                         Date = c.DateTime(nullable: false),
                         BankAccountID = c.String(maxLength: 128),
                         PayeeID = c.String(maxLength: 128),
+                        ReceivingBankAccountID = c.String(maxLength: 128),
                         Discriminator = c.String(nullable: false, maxLength: 128),
                     })
                 .PrimaryKey(t => t.TransactionID)
                 .ForeignKey("dbo.BankAccounts", t => t.BankAccountID)
                 .ForeignKey("dbo.Payees", t => t.PayeeID)
+                .ForeignKey("dbo.BankAccounts", t => t.ReceivingBankAccountID)
                 .Index(t => t.BankAccountID)
-                .Index(t => t.PayeeID);
+                .Index(t => t.PayeeID)
+                .Index(t => t.ReceivingBankAccountID);
             
             CreateTable(
                 "dbo.Disputes",
                 c => new
                     {
-                        TransactionID = c.String(nullable: false, maxLength: 128),
-                        DisputeID = c.String(),
+                        DisputeID = c.String(nullable: false, maxLength: 128),
                         Comments = c.String(),
+                        DisputeType = c.Int(nullable: false),
+                        CorrentAmount = c.Int(nullable: false),
+                        TransactionID = c.String(maxLength: 128),
                     })
-                .PrimaryKey(t => t.TransactionID)
+                .PrimaryKey(t => t.DisputeID)
                 .ForeignKey("dbo.Transactions", t => t.TransactionID)
                 .Index(t => t.TransactionID);
             
@@ -84,12 +90,13 @@ namespace FinalGroupProjectTeam8.Migrations
                 c => new
                     {
                         PayeeID = c.String(nullable: false, maxLength: 128),
-                        Name = c.String(),
-                        Street = c.String(),
-                        City = c.String(),
-                        State = c.String(),
-                        Zip = c.String(),
-                        PhoneNumber = c.String(),
+                        Type = c.Int(nullable: false),
+                        Name = c.String(nullable: false),
+                        Street = c.String(nullable: false),
+                        City = c.String(nullable: false),
+                        State = c.String(nullable: false),
+                        Zip = c.String(nullable: false),
+                        PhoneNumber = c.String(nullable: false),
                     })
                 .PrimaryKey(t => t.PayeeID);
             
@@ -158,6 +165,7 @@ namespace FinalGroupProjectTeam8.Migrations
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.BankAccounts", "UserID", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Transactions", "ReceivingBankAccountID", "dbo.BankAccounts");
             DropForeignKey("dbo.Transactions", "PayeeID", "dbo.Payees");
             DropForeignKey("dbo.Disputes", "TransactionID", "dbo.Transactions");
             DropForeignKey("dbo.Transactions", "BankAccountID", "dbo.BankAccounts");
@@ -165,6 +173,7 @@ namespace FinalGroupProjectTeam8.Migrations
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.Disputes", new[] { "TransactionID" });
+            DropIndex("dbo.Transactions", new[] { "ReceivingBankAccountID" });
             DropIndex("dbo.Transactions", new[] { "PayeeID" });
             DropIndex("dbo.Transactions", new[] { "BankAccountID" });
             DropIndex("dbo.BankAccounts", new[] { "UserID" });

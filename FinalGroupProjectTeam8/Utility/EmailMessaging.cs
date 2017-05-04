@@ -5,7 +5,7 @@ using System.Web;
 using System.Net.Mail;
 using System.Net;
 
-namespace FinalGroupProjectTeam8.Messaging
+namespace FinalGroupProjectTeam8.Utility
 {
     public class EmailMessaging
     {
@@ -15,16 +15,16 @@ namespace FinalGroupProjectTeam8.Messaging
             //Create an email client to send the emails
             var client = new SmtpClient("smtp.gmail.com", 587)
             {
-                Credentials = new NetworkCredential("mydummyemail@gmail.com", "Password123"),
+                Credentials = new NetworkCredential("LonghornBankTeam8@gmail.com", "Password123"),
                 EnableSsl = true
             };
 
             //Add anything that you need to the body of the message
             // /n is a new line – this will add some white space after the main body of the message
-            String finalMessage = emailBody + "\n\n This is a disclaimer that will be on all    messages. ";
+            String finalMessage = emailBody + "\n\n This is a disclaimer for all Longhorn bank emails.";
 
             //Create an email address object for the sender address
-            MailAddress senderEmail = new MailAddress("mydummyemail@gmail.com", "Team 8");
+            MailAddress senderEmail = new MailAddress("LonghornBankTeam8@gmail.com", "Team 8");
 
 
             MailMessage mm = new MailMessage();
