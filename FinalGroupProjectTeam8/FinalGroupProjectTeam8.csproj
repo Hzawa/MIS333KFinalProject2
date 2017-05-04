@@ -316,6 +316,18 @@
     <Compile Include="Migrations\201705040108030_mig10.Designer.cs">
       <DependentUpon>201705040108030_mig10.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705040353252_mig5.cs" />
+    <Compile Include="Migrations\201705040353252_mig5.Designer.cs">
+      <DependentUpon>201705040353252_mig5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705040404161_mig20.cs" />
+    <Compile Include="Migrations\201705040404161_mig20.Designer.cs">
+      <DependentUpon>201705040404161_mig20.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705040447126_mig12.cs" />
+    <Compile Include="Migrations\201705040447126_mig12.Designer.cs">
+      <DependentUpon>201705040447126_mig12.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\AddAccounts.cs" />
     <Compile Include="Migrations\AddCustomers.cs" />
     <Compile Include="Migrations\Configuration.cs" />
@@ -389,6 +401,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705040108030_mig10.resx">
       <DependentUpon>201705040108030_mig10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705040353252_mig5.resx">
+      <DependentUpon>201705040353252_mig5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705040404161_mig20.resx">
+      <DependentUpon>201705040404161_mig20.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705040447126_mig12.resx">
+      <DependentUpon>201705040447126_mig12.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

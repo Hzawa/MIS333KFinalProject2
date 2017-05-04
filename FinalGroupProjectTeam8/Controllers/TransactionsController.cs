@@ -356,6 +356,7 @@ namespace FinalGroupProjectTeam8.Controllers
                            where a.UserID.Equals(userId)
                            select a;
             ViewBag.BankAccountID = new SelectList(accounts, "BankAccountID", "Name");
+            ViewBag.ReceivingBankAccountID = new SelectList(accounts, "ReceivingBankAccountID", "Name");
 
             // The actual view to create transfer
             return View();
@@ -392,6 +393,10 @@ namespace FinalGroupProjectTeam8.Controllers
                 // Must update the balance
                 BankAccount BankAccount = db.BankAccounts.Find(transfer.BankAccountID);
                 BankAccount.Balance = BankAccount.Balance - transfer.Amount;
+
+                // Of the receiving account too...
+                BankAccount ReceivingBankAccount = db.BankAccounts.Find(transfer.ReceivingBankAccountID);
+                ReceivingBankAccount.Balance = ReceivingBankAccount.Balance + transfer.Amount;
                 db.SaveChanges();
             }
 
@@ -409,6 +414,7 @@ namespace FinalGroupProjectTeam8.Controllers
                            where a.UserID.Equals(userId)
                            select a;
             ViewBag.BankAccountID = new SelectList(accounts, "BankAccountID", "Name");
+            ViewBag.ReceivingBankAccountID = new SelectList(accounts, "ReceivingBankAccountID", "Name");
 
             // The actual view to create withdrawwal
             return RedirectToAction("Details", "BankAccount", new { BankAccountID = transfer.BankAccountID });
