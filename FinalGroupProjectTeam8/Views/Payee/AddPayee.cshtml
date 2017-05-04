@@ -1,0 +1,27 @@
+﻿@model FinalGroupProjectTeam8.Models.Payee
+
+@{
+    ViewBag.Title = "AddPayee";
+}
+
+<h2>AddPayee</h2>
+
+@using (Html.BeginForm("AddPayee", "Payee", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Please select a previously created payee to add or create your own.</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.ListBox("SelectedPayees", (SelectList)ViewBag.AllPayees, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <p>
+        @Html.ActionLink("Create New Payee", "CreatePayee")
+    </p>
+}

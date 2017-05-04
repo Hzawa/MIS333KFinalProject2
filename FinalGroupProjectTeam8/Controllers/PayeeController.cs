@@ -72,11 +72,46 @@ namespace FinalGroupProjectTeam8.Controllers
             return View();
         }
 
+        //GET: /Payee/AddPayee
+        [HttpGet]
+        public ActionResult AddPayee()
+        {
+            //ViewBag.AllPayees = GetAllPayees();
+            return View();
+        }
+
+
+        // POST: /Payee/AddPayee
+        [HttpPost]
+        public ActionResult AddPayee(int[] SelectedPayees)
+        {
+            string id = User.Identity.GetUserId();
+            AppUser user = db.Users.Find(id);
+            if (ModelState.IsValid)
+            {
+                if (SelectedPayees != null)
+                {
+                    foreach (int PayeeID in SelectedPayees)
+                    {
+                        Payee payeeToAdd = db.Payees.Find(PayeeID);
+                        user.Payees.Add(payeeToAdd);
+                    }
+                }
+                db.SaveChanges();
+                return RedirectToAction("PayBills");
+            }
+            //ViewBag.AllPayees = GetAllPayees();
+            return View();
+        }
+        
+
+        // GET: /Payee/CreatePayment
         public ActionResult CreatePayment()
         {
             return View();
         }
 
+        // GET: /Payee/ApplicationSuccess
         public ActionResult ApplicationSuccess()
         {
             return View();
