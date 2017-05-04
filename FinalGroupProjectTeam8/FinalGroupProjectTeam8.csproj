@@ -288,6 +288,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BankAccountController.cs" />
+    <Compile Include="Controllers\DisputesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PayeeController.cs" />
@@ -305,6 +306,10 @@
     <Compile Include="Migrations\201705042316539_mig123.cs" />
     <Compile Include="Migrations\201705042316539_mig123.Designer.cs">
       <DependentUpon>201705042316539_mig123.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705042332089_quick-mig.cs" />
+    <Compile Include="Migrations\201705042332089_quick-mig.Designer.cs">
+      <DependentUpon>201705042332089_quick-mig.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Utility\EmailMessaging.cs" />
@@ -360,6 +365,12 @@
     <Content Include="Views\Payee\Home.cshtml" />
     <Content Include="Views\Payee\CreatePayee.cshtml" />
     <Content Include="Views\Payee\ApplicationSuccess.cshtml" />
+    <Content Include="Views\Disputes\Create.cshtml" />
+    <Content Include="Views\Disputes\Delete.cshtml" />
+    <Content Include="Views\Disputes\Details.cshtml" />
+    <Content Include="Views\Disputes\Edit.cshtml" />
+    <Content Include="Views\Disputes\Index.cshtml" />
+    <Content Include="Views\Disputes\CreateDispute.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -379,6 +390,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705042316539_mig123.resx">
       <DependentUpon>201705042316539_mig123.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705042332089_quick-mig.resx">
+      <DependentUpon>201705042332089_quick-mig.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

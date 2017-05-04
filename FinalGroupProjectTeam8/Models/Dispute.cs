@@ -13,9 +13,19 @@ namespace FinalGroupProjectTeam8.Models
     public class Dispute
     {
         public String DisputeID { get; set; }
+
+        [Required(ErrorMessage = "Comments are required.")]
         public String Comments { get; set; }
+
         public DisputeTypeEnum DisputeType { get; set; }
-        public int CorrentAmount { get; set; }
+
+        [Display(Name = "Correct Amount")]
+        [Required(ErrorMessage = "Correct amount is required.")]
+        public int CorrectAmount { get; set; }
+
+        [Display(Name = "Request Deletion?")]
+        [Required(ErrorMessage = "Request Deletion is required.")]
+        public Boolean RequestDeletion { get; set; }
 
         /**
          * Navigational Properties

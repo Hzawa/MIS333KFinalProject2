@@ -56,8 +56,6 @@
 <!-- Show list of transactions -->
 <p>
     @Html.ActionLink("Create new transaction", "CreateTransaction", "Transactions")
-    <br />
-    @Html.ActionLink("Create new dispute", "CreateDispute", "Disputes")
 </p>
 <table class="table">
     <tr>
@@ -96,14 +94,16 @@
             </td>
             <td>
                 @if (item.TransactionType == FinalGroupProjectTeam8.Models.Transaction.TransactionTypeEnum.Transfer) {
-                    @:Sent from @item.BankAccountID to @((FinalGroupProjectTeam8.Models.Transfer) item).ReceivingBankAccountID
+                    @:Sent from @item.BankAccountID to 
+                    // @((FinalGroupProjectTeam8.Models.Transfer) item).ReceivingBankAccountID
                 } else
                 {
                     @:Standard Transaction
                 }
             </td>
             <td>
-                @Html.ActionLink("Details", "Details", "Transactions", new { TransactionID = item.TransactionID }, null)
+                @Html.ActionLink("Details", "Details", "Transactions", new { TransactionID = item.TransactionID }, null) | 
+                @Html.ActionLink("Dispute", "CreateDispute", "Disputes", new { TransactionID = item.TransactionID }, null)
             </td>
         </tr>
     }
