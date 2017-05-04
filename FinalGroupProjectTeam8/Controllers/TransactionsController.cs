@@ -356,7 +356,7 @@ namespace FinalGroupProjectTeam8.Controllers
                            where a.UserID.Equals(userId)
                            select a;
             ViewBag.BankAccountID = new SelectList(accounts, "BankAccountID", "Name");
-            ViewBag.ReceivingBankAccountID = new SelectList(accounts, "ReceivingBankAccountID", "Name");
+            ViewBag.ReceivingBankAccountID = new SelectList(accounts, "BankAccountID", "Name");
 
             // The actual view to create transfer
             return View();
@@ -393,6 +393,7 @@ namespace FinalGroupProjectTeam8.Controllers
                 // Must update the balance
                 BankAccount BankAccount = db.BankAccounts.Find(transfer.BankAccountID);
                 BankAccount.Balance = BankAccount.Balance - transfer.Amount;
+                db.SaveChanges();
 
                 // Of the receiving account too...
                 BankAccount ReceivingBankAccount = db.BankAccounts.Find(transfer.ReceivingBankAccountID);
@@ -406,18 +407,19 @@ namespace FinalGroupProjectTeam8.Controllers
                 db.Transactions.Add(transfer);
                 db.SaveChanges();
                 return RedirectToAction("Details", "BankAccount", new { BankAccountID = transfer.BankAccountID });
+            } else
+            {
+                String errorString = "";
+                foreach (ModelState modelState in ViewData.ModelState.Values)
+                {
+                    foreach (ModelError error in modelState.Errors)
+                    {
+                        System.Diagnostics.Debug.WriteLine("Error: " + error.ErrorMessage);
+                    }
+                }
+                return RedirectToAction("Error", "Home", new { ErrorMessage = "Something went wrong creating your transfer." });
             }
 
-            // We need a list of bank accounts to deposit to
-            var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            var accounts = from a in db.BankAccounts
-                           where a.UserID.Equals(userId)
-                           select a;
-            ViewBag.BankAccountID = new SelectList(accounts, "BankAccountID", "Name");
-            ViewBag.ReceivingBankAccountID = new SelectList(accounts, "ReceivingBankAccountID", "Name");
-
-            // The actual view to create withdrawwal
-            return RedirectToAction("Details", "BankAccount", new { BankAccountID = transfer.BankAccountID });
         }
 
         [HttpGet]
