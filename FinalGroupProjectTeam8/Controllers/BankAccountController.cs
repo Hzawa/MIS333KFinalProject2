@@ -78,11 +78,11 @@ namespace FinalGroupProjectTeam8.Controllers
                     //If account is checkings or savings provide default name
                     if (BankAccountType == BankAccount.BankAccountTypeEnum.CheckingAccount)
                     {
-                        BankAccount.Name = "Longhorn Checking";
+                        if (BankAccount.Name == "") BankAccount.Name = "Longhorn Checking";
                     }
                     else if (BankAccountType == BankAccount.BankAccountTypeEnum.SavingsAccount)
                     {
-                       BankAccount.Name = "Longhorn Savings";
+                        if (BankAccount.Name == "") BankAccount.Name = "Longhorn Savings";
                     }
 
                 }
