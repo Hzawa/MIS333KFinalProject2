@@ -293,6 +293,7 @@
     <Compile Include="Controllers\RoleAdminController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="EmailMessaging.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -315,6 +316,14 @@
     <Compile Include="Migrations\201705040108030_mig10.cs" />
     <Compile Include="Migrations\201705040108030_mig10.Designer.cs">
       <DependentUpon>201705040108030_mig10.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705040442460_mostRecent4.cs" />
+    <Compile Include="Migrations\201705040442460_mostRecent4.Designer.cs">
+      <DependentUpon>201705040442460_mostRecent4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705040512529_mostRecent5.cs" />
+    <Compile Include="Migrations\201705040512529_mostRecent5.Designer.cs">
+      <DependentUpon>201705040512529_mostRecent5.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\AddAccounts.cs" />
     <Compile Include="Migrations\AddCustomers.cs" />
@@ -389,6 +398,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705040108030_mig10.resx">
       <DependentUpon>201705040108030_mig10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705040442460_mostRecent4.resx">
+      <DependentUpon>201705040442460_mostRecent4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705040512529_mostRecent5.resx">
+      <DependentUpon>201705040512529_mostRecent5.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
