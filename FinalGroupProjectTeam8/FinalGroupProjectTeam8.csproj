@@ -300,14 +300,24 @@
     <Compile Include="Migrations\201705031918392_Mig1.Designer.cs">
       <DependentUpon>201705031918392_Mig1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201705032352211_mig.cs" />
-    <Compile Include="Migrations\201705032352211_mig.Designer.cs">
-      <DependentUpon>201705032352211_mig.cs</DependentUpon>
+    <Compile Include="Migrations\201705040039433_Seed.cs" />
+    <Compile Include="Migrations\201705040039433_Seed.Designer.cs">
+      <DependentUpon>201705040039433_Seed.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201705040002517_mi4.cs" />
-    <Compile Include="Migrations\201705040002517_mi4.Designer.cs">
-      <DependentUpon>201705040002517_mi4.cs</DependentUpon>
+    <Compile Include="Migrations\201705040041385_Seed1.cs" />
+    <Compile Include="Migrations\201705040041385_Seed1.Designer.cs">
+      <DependentUpon>201705040041385_Seed1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705040104079_mig9.cs" />
+    <Compile Include="Migrations\201705040104079_mig9.Designer.cs">
+      <DependentUpon>201705040104079_mig9.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705040108030_mig10.cs" />
+    <Compile Include="Migrations\201705040108030_mig10.Designer.cs">
+      <DependentUpon>201705040108030_mig10.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\AddAccounts.cs" />
+    <Compile Include="Migrations\AddCustomers.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BankAccount.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -368,11 +378,17 @@
     <EmbeddedResource Include="Migrations\201705031918392_Mig1.resx">
       <DependentUpon>201705031918392_Mig1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705032352211_mig.resx">
-      <DependentUpon>201705032352211_mig.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705040039433_Seed.resx">
+      <DependentUpon>201705040039433_Seed.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705040002517_mi4.resx">
-      <DependentUpon>201705040002517_mi4.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705040041385_Seed1.resx">
+      <DependentUpon>201705040041385_Seed1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705040104079_mig9.resx">
+      <DependentUpon>201705040104079_mig9.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705040108030_mig10.resx">
+      <DependentUpon>201705040108030_mig10.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

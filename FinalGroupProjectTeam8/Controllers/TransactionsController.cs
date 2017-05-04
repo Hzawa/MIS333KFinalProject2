@@ -41,7 +41,7 @@ namespace FinalGroupProjectTeam8.Controllers
         }
 
         //advanced search method
-        public ActionResult SearchResults(String SearchString, String Description, Transaction.TransactionTypeEnum SelectedTransaction, Decimal Amount, String TransactionID, DateTime Date, SortOrder SelectedSortOrder)
+        public ActionResult SearchResults(String SearchString, String Description/*, Transaction.TransactionTypeEnum SelectedTransaction, Decimal Amount, String TransactionID, DateTime Date, SortOrder SelectedSortOrder*/)
         {
             List<Transaction> SelectedTransactions = new List<Transaction>();
             List<Transaction> AllTransactions = db.Transactions.ToList();
@@ -49,7 +49,7 @@ namespace FinalGroupProjectTeam8.Controllers
             //start with db set with wanted data
             var query = from t in db.Transactions
                         select t;
-            
+
             //code for textbox searching
             if (SearchString == null || SearchString == "") //they didn't select anything
             {
@@ -57,18 +57,18 @@ namespace FinalGroupProjectTeam8.Controllers
             }
             else //they picked something
             {
-                query = query.Where( t => t.Description.Contains(SearchString) || t.TransactionID.Contains(SearchString) );
+                query = query.Where(t => t.Description.Contains(SearchString) || t.TransactionID.Contains(SearchString));
             }
 
-            //Transaction drop down list
-            if (SelectedTransaction == 0)
-            {
-                //query = query
-            }
-            else
-            {
-                query = query.Where(t => t.TransactionType == SelectedTransaction);
-            }
+            ////Transaction drop down list
+            //if (SelectedTransaction == 0)
+            //{
+            //    //query = query
+            //}
+            //else
+            //{
+            //    query = query.Where(t => t.TransactionType == SelectedTransaction);
+            //}
 
             //Code for radio buttons
             //switch (SelectedGender)
@@ -86,55 +86,55 @@ namespace FinalGroupProjectTeam8.Controllers
 
             //Code for desired sales textbox
             //check to see if string is valid
-            if ( Convert.ToString(Amount) == null || Convert.ToString(Amount) == "")
-            {
-                //query = query 
-            }
-            else
-            {
-                try
-                {
-                    Amount = Convert.ToDecimal(Amount);
-                }
+            //if ( Convert.ToString(Amount) == null || Convert.ToString(Amount) == "")
+            //{
+            //    //query = query 
+            //}
+            //else
+            //{
+            //    try
+            //    {
+            //        Amount = Convert.ToDecimal(Amount);
+            //    }
 
-                //code to display when something is wrong
-                catch
-                {
-                    //add message for viewbag
-                    ViewBag.Message = Amount + " is not a valid number. Please try again.";
+            //    //code to display when something is wrong
+            //    catch
+            //    {
+            //        //add message for viewbag
+            //        ViewBag.Message = Amount + " is not a valid number. Please try again.";
 
-                    //re-populate dropdown
-                    ViewBag.TransactionType = GetAllTransactions();
+            //        //re-populate dropdown
+            //        ViewBag.TransactionType = GetAllTransactions();
 
-                    //send user back to advanced search pagee
-                    return View("Transactions/Details");
-                }
+            //        //send user back to advanced search pagee
+            //        return View("Transactions/Details");
+            //    }
 
-                //radio buttons for specific parameters 
-                //switch (Convert.ToString(Amount))
-                //    {
-                //        case :
-                //        {
-                //            query = query.Where(c => c.AverageSale >= decSalesAmount);
-                //            break;
-                //        }
-                //        case CustomAmounts.FirstHundred:
-                //        {
-                //            query = query.Where(c => c.AverageSale <= decSalesAmount);
-                //            break;
-                //        }
-                //        case CustomAmounts.FirstHundred:
-                //        {
-                //            query = query.Where(c => c.AverageSale <= decSalesAmount);
-                //            break;
-                //        }
-                //        case CustomAmounts.FirstHundred:
-                //        {
-                //            query = query.Where(c => c.AverageSale <= decSalesAmount);
-                //            break;
-                //        }
-                //   }
-            }
+            //radio buttons for specific parameters 
+            //switch (Convert.ToString(Amount))
+            //    {
+            //        case :
+            //        {
+            //            query = query.Where(c => c.AverageSale >= decSalesAmount);
+            //            break;
+            //        }
+            //        case CustomAmounts.FirstHundred:
+            //        {
+            //            query = query.Where(c => c.AverageSale <= decSalesAmount);
+            //            break;
+            //        }
+            //        case CustomAmounts.FirstHundred:
+            //        {
+            //            query = query.Where(c => c.AverageSale <= decSalesAmount);
+            //            break;
+            //        }
+            //        case CustomAmounts.FirstHundred:
+            //        {
+            //            query = query.Where(c => c.AverageSale <= decSalesAmount);
+            //            break;
+            //        }
+            //   }
+            //}
 
             // Transaction Date
             //if (daysBack == 0)
@@ -162,13 +162,13 @@ namespace FinalGroupProjectTeam8.Controllers
             ViewBag.TotalCustomerCount = AllTransactions.Count();
 
             //return limited queries
-            return View("Transactions/Details", SelectedTransactions.OrderBy(t => t.TransactionID).ThenBy(t =>t.TransactionType).ThenBy(t => t.Description).ThenBy(t => t.Amount));
+            return View("Transactions/Details", SelectedTransactions.OrderBy(t => t.TransactionID).ThenBy(t => t.TransactionType).ThenBy(t => t.Description).ThenBy(t => t.Amount));
         }
 
 
 
 
-public ActionResult Search() {
+        public ActionResult Search() {
             // Kevin work here
 
             return View();
@@ -202,7 +202,7 @@ public ActionResult Search() {
             return View(transaction);
         }
 
-        
+
         public ActionResult CreateTransaction()
         {
             // A view with 3 buttons, one to create withdrawal, deposit, and transfer
@@ -211,8 +211,8 @@ public ActionResult Search() {
 
         //GET: Transactions/Deposit
         [HttpGet]
-
-        public ActionResult CreateDeposit() {
+        public ActionResult CreateDeposit()
+        {
 
             // We need a list of bank accounts to deposit to
             var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
@@ -228,34 +228,43 @@ public ActionResult Search() {
         [HttpPost]
         public ActionResult CreateDeposit(Deposit deposit)
         {
+
+            // Give this transaction the right primary key
+            var idObject = db.Transactions.OrderByDescending(b => b.TransactionID).FirstOrDefault();
+            if (idObject == null) deposit.TransactionID = "1000000000";
+            else
+            {
+                int nextId = Convert.ToInt32(idObject.TransactionID) + 1;
+                String nextIdString = nextId.ToString();
+                deposit.TransactionID = nextIdString;
+            }
+
+            // Do validation here
+            if (deposit.Amount <= 0) {
+                return RedirectToAction("Error", "Home", new { ErrorMessage = "Please deposit an amount greater than 0." });
+            }
+
+            // Any changes
+            if (deposit.Amount > 1000)
+            {
+                deposit.TransactionStatus = Transaction.TransactionStatusEnum.Pending;
+            }
+            else
+            {
+                deposit.TransactionStatus = Transaction.TransactionStatusEnum.Approved;
+
+                // Must update the balance
+                BankAccount BankAccount = db.BankAccounts.Find(deposit.BankAccountID);
+                BankAccount.Balance = BankAccount.Balance + deposit.Amount;
+                db.SaveChanges();
+            }
+
+            // Actually committing the deposit
             if (ModelState.IsValid)
             {
-                
-                try
-                {
-                    // Your code...
-                    // Could also be before try if you know the exception occurs in SaveChanges
-                    db.Transactions.Add(deposit);
-                    db.SaveChanges();
-                }
-                catch (DbEntityValidationException e)
-                {
-                    foreach (var eve in e.EntityValidationErrors)
-                    {
-                        Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-                            eve.Entry.Entity.GetType().Name, eve.Entry.State);
-                        foreach (var ve in eve.ValidationErrors)
-                        {
-                            Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-                                ve.PropertyName, ve.ErrorMessage);
-                        }
-                    }
-                } catch (Exception e)
-                {
-                    Console.WriteLine(e.ToString());
-                }
-                
-                return RedirectToAction("Index");
+                db.Transactions.Add(deposit);
+                db.SaveChanges();
+                return RedirectToAction("Details", "BankAccount", new { BankAccountID = deposit.BankAccountID });
             }
 
             // We need a list of bank accounts to deposit to
@@ -266,41 +275,143 @@ public ActionResult Search() {
             ViewBag.BankAccountID = new SelectList(accounts, "BankAccountID", "Name");
 
             // The actual view to create a deposit
-            return View();
+            return RedirectToAction("Details", "BankAccount", new { BankAccountID = deposit.BankAccountID });
         }
 
         //GET: Transactions/Withdrawal
         [HttpGet]
         public ActionResult CreateWithdrawal()
         {
+            // We need a list of bank accounts to deposit to
+            var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var accounts = from a in db.BankAccounts
+                           where a.UserID.Equals(userId)
+                           select a;
+            ViewBag.BankAccountID = new SelectList(accounts, "BankAccountID", "Name");
 
             // The actual view to create withdrawal
             return View();
         }
         //POST: Transactions/Withdrawal
         [HttpPost]
-        public ActionResult CreateWithrawal(Withdrawal withdrawal, BankAccount.BankAccountTypeEnum from)
+        public ActionResult CreateWithdrawal(Withdrawal withdrawal)
         {
+            // Give this transaction the right primary key
+            var idObject = db.Transactions.OrderByDescending(b => b.TransactionID).FirstOrDefault();
+            if (idObject == null) withdrawal.TransactionID = "1000000000";
+            else
+            {
+                int nextId = Convert.ToInt32(idObject.TransactionID) + 1;
+                String nextIdString = nextId.ToString();
+                withdrawal.TransactionID = nextIdString;
+            }
 
-            // The actual view to create withdrawal
-            return View();
+            // Do validation here
+            if (withdrawal.Amount <= 0)
+            {
+                return RedirectToAction("Error", "Home", new { ErrorMessage = "Please deposit an amount greater than 0." });
+            }
+
+            // Any changes
+            if (withdrawal.Amount > 1000)
+            {
+                withdrawal.TransactionStatus = Transaction.TransactionStatusEnum.Pending;
+            }
+            else
+            {
+                withdrawal.TransactionStatus = Transaction.TransactionStatusEnum.Approved;
+
+                // Must update the balance
+                BankAccount BankAccount = db.BankAccounts.Find(withdrawal.BankAccountID);
+                BankAccount.Balance = BankAccount.Balance - withdrawal.Amount;
+                db.SaveChanges();
+            }
+
+            // Actually committing the withdrawal
+            if (ModelState.IsValid)
+            {
+                db.Transactions.Add(withdrawal);
+                db.SaveChanges();
+                return RedirectToAction("Details", "BankAccount", new { BankAccountID = withdrawal.BankAccountID });
+            }
+
+            // We need a list of bank accounts to deposit to
+            var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var accounts = from a in db.BankAccounts
+                           where a.UserID.Equals(userId)
+                           select a;
+            ViewBag.BankAccountID = new SelectList(accounts, "BankAccountID", "Name");
+
+            // The actual view to create withdrawwal
+            return RedirectToAction("Details", "BankAccount", new { BankAccountID = withdrawal.BankAccountID });
         }
 
         //GET: Transactions/Transfer
         [HttpGet]
         public ActionResult CreateTransfer()
         {
+            // We need a list of bank accounts to transfer to and from
+            var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var accounts = from a in db.BankAccounts
+                           where a.UserID.Equals(userId)
+                           select a;
+            ViewBag.BankAccountID = new SelectList(accounts, "BankAccountID", "Name");
 
             // The actual view to create transfer
             return View();
         }
         //POST: Transactions/Transfer
         [HttpPost]
-        public ActionResult CreateTransfer(Transfer transfer, BankAccount.BankAccountTypeEnum from, BankAccount.BankAccountTypeEnum to)
+        public ActionResult CreateTransfer(Transfer transfer)
         {
+            // Give this transaction the right primary key
+            var idObject = db.Transactions.OrderByDescending(b => b.TransactionID).FirstOrDefault();
+            if (idObject == null) transfer.TransactionID = "1000000000";
+            else
+            {
+                int nextId = Convert.ToInt32(idObject.TransactionID) + 1;
+                String nextIdString = nextId.ToString();
+                transfer.TransactionID = nextIdString;
+            }
 
-            // The actual view to create transfer
-            return View();
+            // Do validation here
+            if (transfer.Amount <= 0)
+            {
+                return RedirectToAction("Error", "Home", new { ErrorMessage = "Please deposit an amount greater than 0." });
+            }
+
+            // Any changes
+            if (transfer.Amount > 1000)
+            {
+                transfer.TransactionStatus = Transaction.TransactionStatusEnum.Pending;
+            }
+            else
+            {
+                transfer.TransactionStatus = Transaction.TransactionStatusEnum.Approved;
+
+                // Must update the balance
+                BankAccount BankAccount = db.BankAccounts.Find(transfer.BankAccountID);
+                BankAccount.Balance = BankAccount.Balance - transfer.Amount;
+                db.SaveChanges();
+            }
+
+            // Actually committing the withdrawal
+            if (ModelState.IsValid)
+            {
+                db.Transactions.Add(transfer);
+                db.SaveChanges();
+                return RedirectToAction("Details", "BankAccount", new { BankAccountID = transfer.BankAccountID });
+            }
+
+            // We need a list of bank accounts to deposit to
+            var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            var accounts = from a in db.BankAccounts
+                           where a.UserID.Equals(userId)
+                           select a;
+            ViewBag.BankAccountID = new SelectList(accounts, "BankAccountID", "Name");
+
+            // The actual view to create withdrawwal
+            return RedirectToAction("Details", "BankAccount", new { BankAccountID = transfer.BankAccountID });
         }
 
         [HttpGet]
