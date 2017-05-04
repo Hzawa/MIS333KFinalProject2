@@ -300,6 +300,16 @@
     <Compile Include="Migrations\201705031918392_Mig1.Designer.cs">
       <DependentUpon>201705031918392_Mig1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705040039433_Seed.cs" />
+    <Compile Include="Migrations\201705040039433_Seed.Designer.cs">
+      <DependentUpon>201705040039433_Seed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705040041385_Seed1.cs" />
+    <Compile Include="Migrations\201705040041385_Seed1.Designer.cs">
+      <DependentUpon>201705040041385_Seed1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\AddAccounts.cs" />
+    <Compile Include="Migrations\AddCustomers.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BankAccount.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -354,6 +364,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201705031918392_Mig1.resx">
       <DependentUpon>201705031918392_Mig1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705040039433_Seed.resx">
+      <DependentUpon>201705040039433_Seed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705040041385_Seed1.resx">
+      <DependentUpon>201705040041385_Seed1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

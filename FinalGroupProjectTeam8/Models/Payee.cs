@@ -7,9 +7,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FinalGroupProjectTeam8.Models
 {
+    public enum PayeeType { CreditCard, Utilities, Rent, Mortgage, Other }
     public class Payee
     {
+
         public String PayeeID { get; set; }
+        public PayeeType Type { get; set; }
         public String Name { get; set; }
         public String Street { get; set; }
         public String City { get; set; }
