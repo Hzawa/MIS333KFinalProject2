@@ -57,6 +57,8 @@ namespace FinalGroupProjectTeam8.Models
         // Each user can have many accounts (move to customer level?)
         public virtual List<BankAccount> BankAccounts { get; set; }
 
+        // Each user can have many payees
+        public virtual List<Payee> Payee { get; set; }
 
         //This method allows you to create a new user
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<AppUser> manager)

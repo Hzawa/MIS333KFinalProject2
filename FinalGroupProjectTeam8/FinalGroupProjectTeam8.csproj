@@ -302,6 +302,10 @@
     <Compile Include="Migrations\201705042301032_mig2.Designer.cs">
       <DependentUpon>201705042301032_mig2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705042316539_mig123.cs" />
+    <Compile Include="Migrations\201705042316539_mig123.Designer.cs">
+      <DependentUpon>201705042316539_mig123.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Utility\EmailMessaging.cs" />
     <Compile Include="Global.asax.cs">
@@ -372,6 +376,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705042301032_mig2.resx">
       <DependentUpon>201705042301032_mig2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705042316539_mig123.resx">
+      <DependentUpon>201705042316539_mig123.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
