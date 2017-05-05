@@ -35,7 +35,7 @@ namespace FinalGroupProjectTeam8.Models
         public virtual List<Transaction> Transactions { get; set; }
 
         // A payee can be tied to multiple users
-        public virtual List<Payee> Payees { get; set; }
+        public virtual List<AppUser> AppUsers { get; set; }
 
     }
 }
