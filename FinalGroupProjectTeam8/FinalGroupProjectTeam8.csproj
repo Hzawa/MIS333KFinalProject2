@@ -316,6 +316,10 @@
     <Compile Include="Migrations\201705050032144_mig4.Designer.cs">
       <DependentUpon>201705050032144_mig4.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705051129389_mig21.cs" />
+    <Compile Include="Migrations\201705051129389_mig21.Designer.cs">
+      <DependentUpon>201705051129389_mig21.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ManagerHomeViewModel.cs" />
     <Compile Include="Utility\EmailMessaging.cs" />
@@ -416,6 +420,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705050032144_mig4.resx">
       <DependentUpon>201705050032144_mig4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705051129389_mig21.resx">
+      <DependentUpon>201705051129389_mig21.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

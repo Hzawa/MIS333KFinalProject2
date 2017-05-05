@@ -12,6 +12,7 @@ namespace FinalGroupProjectTeam8.Models
 
     public class Dispute
     {
+        [Display(Name = "Dispute Number")]
         public String DisputeID { get; set; }
 
         [Required(ErrorMessage = "Comments are required.")]

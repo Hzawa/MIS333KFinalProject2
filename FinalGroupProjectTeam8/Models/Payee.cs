@@ -11,6 +11,7 @@ namespace FinalGroupProjectTeam8.Models
     public class Payee
     {
 
+        [Display(Name = "Payee Number")]
         public String PayeeID { get; set; }
         [Required]
         public PayeeType Type { get; set; }

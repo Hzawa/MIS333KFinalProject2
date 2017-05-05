@@ -51,7 +51,6 @@ namespace FinalGroupProjectTeam8.Models
         public string PhoneNumber { get; set; }
 
         [Display(Name = "Middle Initial")]
-        [Required(ErrorMessage = "Middle initial is required.")]
         public String MiddleInitial { get; set; }
 
         [Display(Name = "Last Name")]
