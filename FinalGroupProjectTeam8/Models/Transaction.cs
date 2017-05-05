@@ -10,7 +10,7 @@ namespace FinalGroupProjectTeam8.Models
     public class Transaction
     {
         
-        public enum TransactionTypeEnum { All, Withdrawal, Deposit, Transfer, Payment }
+        public enum TransactionTypeEnum { All, Withdrawal, Deposit, Transfer, Payment, Fee }
         public TransactionTypeEnum TransactionType { get; set; }
 
         public enum TransactionStatusEnum { Pending, Approved, Rejected }

@@ -4,11 +4,22 @@
     ViewBag.Title = "User Home Page";
 }
 
-<div class="jumbotron">
-    <h1>User Home Page</h1>
-    <p class="lead">This is the user home page!</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+
+@{ 
+    Boolean negative = false;
+    foreach (var item in Model) {
+        if (item.Balance < 0) {
+            negative = true;
+            break;
+        }
+    }
+    if (negative) {
+        @: <div class="jumbotron">
+        @: <span style="color:red;">You have an overdraft account. Please resolve as soon as possible.</span>
+        @: </div>
+    }
+
+}
 
 <p>
     <a class="btn btn-primary" href="/User/ApplyForAccount">Apply for new account</a>

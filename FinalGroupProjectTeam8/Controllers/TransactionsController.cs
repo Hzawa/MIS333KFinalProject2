@@ -393,20 +393,42 @@ namespace FinalGroupProjectTeam8.Controllers
                 return RedirectToAction("Error", "Home", new { ErrorMessage = "Please deposit an amount greater than 0." });
             }
 
-            // Any changes
-            if (withdrawal.Amount > 1000)
-            {
-                withdrawal.TransactionStatus = Transaction.TransactionStatusEnum.Pending;
-            }
-            else
-            {
-                withdrawal.TransactionStatus = Transaction.TransactionStatusEnum.Approved;
+            // Overdraft logic
+            BankAccount BankAccount = db.BankAccounts.Find(withdrawal.BankAccountID);
+            Decimal NewBalance = BankAccount.Balance - withdrawal.Amount;
+            if (NewBalance < 0 && NewBalance > -50) {
 
-                // Must update the balance
-                BankAccount BankAccount = db.BankAccounts.Find(withdrawal.BankAccountID);
-                BankAccount.Balance = BankAccount.Balance - withdrawal.Amount;
+                // Create Overdraft fee
+                Transaction Transaction = new Models.Transaction();
+
+                // Give this transaction the right primary key
+                int nextId = Convert.ToInt32(withdrawal.TransactionID) + 1;
+                String nextIdString = nextId.ToString();
+                Transaction.TransactionID = nextIdString;
+
+                // Other properties
+                Transaction.TransactionType = Transaction.TransactionTypeEnum.Fee;
+                Transaction.Description = "Overdraft fee";
+                Transaction.Date = DateTime.Now;
+                Transaction.BankAccountID = BankAccount.BankAccountID;
+                Transaction.Amount = 30;
+                Transaction.TransactionStatus = Transaction.TransactionStatusEnum.Approved;
+                db.Transactions.Add(Transaction);
                 db.SaveChanges();
+
+                // Update Balance
+                NewBalance = NewBalance - Transaction.Amount;
+
+            } else if (NewBalance < -50) {
+                return RedirectToAction("Error", "Home", new { ErrorMessage = "This transaction would bring this account below -$50.00. You are not allowed to make this transaction." });
             }
+
+            // Any changes
+            withdrawal.TransactionStatus = Transaction.TransactionStatusEnum.Approved;
+
+            // Must update the balance
+            BankAccount.Balance = NewBalance;
+            db.SaveChanges();
 
             // Actually committing the withdrawal
             if (ModelState.IsValid)
@@ -457,30 +479,59 @@ namespace FinalGroupProjectTeam8.Controllers
             }
 
             // Do validation here
+            BankAccount BankAccount = db.BankAccounts.Find(transfer.BankAccountID);
             if (transfer.Amount <= 0)
             {
                 return RedirectToAction("Error", "Home", new { ErrorMessage = "Please deposit an amount greater than 0." });
             }
+            if (BankAccount.Balance < 0) {
+                return RedirectToAction("Error", "Home", new { ErrorMessage = "Cannot create transfer with an account in the negatives." });
+            }
+
+            // Overdraft logic
+            Decimal NewBalance = BankAccount.Balance - transfer.Amount;
+            if (NewBalance < 0 && NewBalance > -50)
+            {
+
+                // Create Overdraft fee
+                Transaction Transaction = new Models.Transaction();
+
+                // Give this transaction the right primary key
+                int nextId = Convert.ToInt32(transfer.TransactionID) + 1;
+                String nextIdString = nextId.ToString();
+                Transaction.TransactionID = nextIdString;
+
+                // Other properties
+                Transaction.TransactionType = Transaction.TransactionTypeEnum.Fee;
+                Transaction.Description = "Overdraft fee";
+                Transaction.Date = DateTime.Now;
+                Transaction.BankAccountID = BankAccount.BankAccountID;
+                Transaction.Amount = 30;
+                Transaction.TransactionStatus = Transaction.TransactionStatusEnum.Approved;
+                db.Transactions.Add(Transaction);
+                db.SaveChanges();
+
+                // Update Balance
+                NewBalance = NewBalance - Transaction.Amount;
+
+            }
+            else if (NewBalance < -50)
+            {
+                return RedirectToAction("Error", "Home", new { ErrorMessage = "This transaction would bring this account below -$50.00. You are not allowed to make this transaction." });
+            }
 
             // Any changes
-            if (transfer.Amount > 1000)
-            {
-                transfer.TransactionStatus = Transaction.TransactionStatusEnum.Pending;
-            }
-            else
-            {
-                transfer.TransactionStatus = Transaction.TransactionStatusEnum.Approved;
+            transfer.TransactionStatus = Transaction.TransactionStatusEnum.Approved;
 
-                // Must update the balance
-                BankAccount BankAccount = db.BankAccounts.Find(transfer.BankAccountID);
-                BankAccount.Balance = BankAccount.Balance - transfer.Amount;
-                db.SaveChanges();
+            // Must update the balance
+            BankAccount BankAccountI = db.BankAccounts.Find(transfer.BankAccountID);
+            BankAccountI.Balance = NewBalance;
+            db.SaveChanges();
 
-                // Of the receiving account too...
-                BankAccount ReceivingBankAccount = db.BankAccounts.Find(transfer.ReceivingBankAccountID);
-                ReceivingBankAccount.Balance = ReceivingBankAccount.Balance + transfer.Amount;
-                db.SaveChanges();
-            }
+            // Of the receiving account too...
+            BankAccount ReceivingBankAccount = db.BankAccounts.Find(transfer.ReceivingBankAccountID);
+            ReceivingBankAccount.Balance = ReceivingBankAccount.Balance + transfer.Amount;
+            db.SaveChanges();
 
             // Actually committing the withdrawal
             if (ModelState.IsValid)

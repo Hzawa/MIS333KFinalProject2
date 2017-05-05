@@ -149,20 +149,58 @@ namespace FinalGroupProjectTeam8.Controllers
              */
 
             // Do validation here
+            BankAccount BankAccount = db.BankAccounts.Find(payment.BankAccountID);
             if (payment.Amount <= 0)
             {
                 return RedirectToAction("Error", "Home", new { ErrorMessage = "Please deposit an amount greater than 0." });
+            }
+            if (BankAccount.Balance < 0)
+            {
+                return RedirectToAction("Error", "Home", new { ErrorMessage = "Cannot create payment with an account in the negatives." });
+            }
+
+            // Overdraft logic
+            Decimal NewBalance = BankAccount.Balance - payment.Amount;
+            if (NewBalance < 0 && NewBalance > -50)
+            {
+
+                // Create Overdraft fee
+                Transaction Transaction = new Models.Transaction();
+
+                // Give this transaction the right primary key
+                int nextId = Convert.ToInt32(payment.TransactionID) + 1;
+                String nextIdString = nextId.ToString();
+                Transaction.TransactionID = nextIdString;
+
+                // Other properties
+                Transaction.TransactionType = Transaction.TransactionTypeEnum.Fee;
+                Transaction.Description = "Overdraft fee";
+                Transaction.Date = DateTime.Now;
+                Transaction.BankAccountID = BankAccount.BankAccountID;
+                Transaction.Amount = 30;
+                Transaction.TransactionStatus = Transaction.TransactionStatusEnum.Approved;
+                db.Transactions.Add(Transaction);
+                db.SaveChanges();
+
+                // Update Balance
+                NewBalance = NewBalance - Transaction.Amount;
+
+            }
+            else if (NewBalance < -50)
+            {
+                return RedirectToAction("Error", "Home", new { ErrorMessage = "This transaction would bring this account below -$50.00. You are not allowed to make this transaction." });
             }
 
             /**
              * Any changes here
              */
+
             // Any changes
             payment.TransactionStatus = Transaction.TransactionStatusEnum.Approved;
 
             // Must update the balance
-            BankAccount BankAccount = db.BankAccounts.Find(payment.BankAccountID);
-            BankAccount.Balance = BankAccount.Balance - payment.Amount;
+            BankAccount BankAccountI = db.BankAccounts.Find(payment.BankAccountID);
+            BankAccountI.Balance = NewBalance;
             db.SaveChanges();
 
             /**
