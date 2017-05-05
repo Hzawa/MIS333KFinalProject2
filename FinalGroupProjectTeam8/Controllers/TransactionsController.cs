@@ -21,6 +21,12 @@ namespace FinalGroupProjectTeam8.Controllers
 
     public class TransactionsController : Controller
     {
+        public ActionResult Success(String Message)
+        {
+            ViewBag.Message = Message;
+            return View();
+        }
+
         private AppDbContext db = new AppDbContext();
 
         //method to get all transactions
