@@ -82,7 +82,7 @@ namespace FinalGroupProjectTeam8.Controllers
             var disputes = db.Disputes.Where(d => d.DisputeType == DisputeTypeEnum.Submitted);
 
             // Get unresolved transactions
-            var transactions = db.Transactions.Where(t => t.TransactionStatus == Transaction.TransactionStatusEnum.Approved);
+            var transactions = db.Transactions.Where(t => t.TransactionStatus == Transaction.TransactionStatusEnum.Pending);
 
             // Create the view model
             ManagerHomeViewModel ManagerHomeViewModel = new ManagerHomeViewModel();

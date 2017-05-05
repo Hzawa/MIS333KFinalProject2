@@ -389,6 +389,8 @@
     <Content Include="Views\User\ManagerHome.cshtml" />
     <Content Include="Views\Disputes\Resolve.cshtml" />
     <Content Include="Views\Disputes\ConfirmResolution.cshtml" />
+    <Content Include="Views\Transactions\Resolve.cshtml" />
+    <Content Include="Views\Transactions\ConfirmResolution.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

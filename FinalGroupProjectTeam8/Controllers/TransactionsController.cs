@@ -187,6 +187,80 @@ namespace FinalGroupProjectTeam8.Controllers
             return View();
         }
 
+        // GET: Disputes/Edit/5
+        public ActionResult Resolve(string TransactionID)
+        {
+            if (TransactionID == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Transaction Transaction = db.Transactions.Find(TransactionID);
+            if (Transaction == null)
+            {
+                return HttpNotFound();
+            }
+            return View(Transaction);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Resolve(Transaction Transaction)
+        {
+
+            // Update the Transaction
+            Transaction EditedTransaction = db.Transactions.Find(Transaction.TransactionID);
+            EditedTransaction.TransactionStatus = Transaction.TransactionStatus;
+            EditedTransaction.Comments = Transaction.Comments;
+
+            if (EditedTransaction.TransactionStatus == Transaction.TransactionStatusEnum.Approved)
+            {
+
+                // Get the corresponding bank account
+                BankAccount BankAccount = db.BankAccounts.Find(EditedTransaction.BankAccountID);
+
+                // If transaction was successful, adjust account with the difference
+                if (EditedTransaction.TransactionType == Transaction.TransactionTypeEnum.Deposit)
+                {
+                    BankAccount.Balance = BankAccount.Balance + EditedTransaction.Amount;
+                }
+                else if (EditedTransaction.TransactionType == Transaction.TransactionTypeEnum.Withdrawal || EditedTransaction.TransactionType == Transaction.TransactionTypeEnum.Payment)
+                {
+                    BankAccount.Balance = BankAccount.Balance - EditedTransaction.Amount;
+                }
+                else if (EditedTransaction.TransactionType == Transaction.TransactionTypeEnum.Transfer)
+                {
+                    BankAccount.Balance = BankAccount.Balance - EditedTransaction.Amount;
+
+                    // Must also update the receiving bank account
+                    Transfer Transfer = (Transfer)db.Transactions.Find(EditedTransaction.TransactionID);
+                    BankAccount ReceivingBankAccount = db.BankAccounts.Find(Transfer.ReceivingBankAccountID);
+                    ReceivingBankAccount.Balance = ReceivingBankAccount.Balance + EditedTransaction.Amount;
+                    db.Entry(ReceivingBankAccount).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+
+                // Update BankAccount
+                db.Entry(BankAccount).State = EntityState.Modified;
+                db.SaveChanges();
+
+            }
+
+            // Finally, update the dispute
+            ModelState.Clear();
+            if (TryValidateModel(EditedTransaction))
+            {
+                db.Entry(EditedTransaction).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("ConfirmResolution");
+            }
+            return View(Transaction);
+        }
+
+        public ActionResult ConfirmResolution() {
+            return View();
+        }
+
+
         // GET: Transactions
         public ActionResult Index()
         {
