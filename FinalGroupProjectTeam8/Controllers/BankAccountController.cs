@@ -139,6 +139,8 @@ namespace FinalGroupProjectTeam8.Controllers
         //search
         public ActionResult Details(String BankAccountID, String TransactionID, String Description, TransactionTypeEnum? TransactionType, Decimal? AmountLowerBound, Decimal? AmountUpperBound, DateTime? DateLowerBound, DateTime? DateUpperBound) {
 
+            List<Transaction> SelectedTransactions = new List<Transaction>();
+
             // Query for given bank account ID
             var accounts = from a in db.BankAccounts
                            where a.BankAccountID.Equals(BankAccountID)
@@ -166,15 +168,12 @@ namespace FinalGroupProjectTeam8.Controllers
             var transactions = from t in db.Transactions
                                where t.BankAccountID == BankAccount.BankAccountID
                                select t;
+            List<Transaction> AllTransactions = transactions.ToList();
+
 
             /**
              * START filtering transactions
              */
-
-            // Description filter
-            if (Description != null && Description != "") {
-                transactions = transactions.Where(t => t.Description.Contains(Description));
-            }
 
             // Transaction ID filter
             if (TransactionID != null && TransactionID != "") {
@@ -191,35 +190,43 @@ namespace FinalGroupProjectTeam8.Controllers
             //    transactions = transactions.Where(t => t.TransactionType == TransactionType);
             //}
 
+            // Description filter
+            if (Description != null && Description != "")
+            {
+                transactions = transactions.Where(t => t.Description.Contains(Description));
+            }
+
             //Amount filter
             if (AmountLowerBound != null && AmountLowerBound != 0.00m && AmountUpperBound != null && AmountUpperBound != 0.00m)
             {
-                transactions = transactions.Where(t => t.Amount > AmountLowerBound);
-                transactions = transactions.Where(t => t.Amount < AmountUpperBound);
+                transactions = transactions.Where(t => t.Amount > AmountLowerBound && t.Amount < AmountUpperBound);
             }
             else if (AmountLowerBound != null && AmountLowerBound != 0.00m)
             {
                 transactions = transactions.Where(t => t.Amount > AmountLowerBound);
             }
-            else if (AmountUpperBound != null && AmountLowerBound != 0.00m)
+            else if (AmountUpperBound != null && AmountUpperBound != 0.00m)
             {
                 transactions = transactions.Where(t => t.Amount < AmountUpperBound);
             }
 
             //Date filter
-            if (DateLowerBound != null && Convert.ToString(DateLowerBound) != "" && DateUpperBound != null && Convert.ToString(DateUpperBound) != "")
+            if (DateLowerBound != null && DateLowerBound != DateTime.MinValue && DateUpperBound != null && DateUpperBound != DateTime.MinValue)
             {
                 transactions = transactions.Where(t => t.Date > DateLowerBound);
                 transactions = transactions.Where(t => t.Date < DateUpperBound);
             }
-            else if (AmountLowerBound != null && Convert.ToString(DateLowerBound) != "")
+            else if (AmountLowerBound != null && DateLowerBound != DateTime.MinValue)
             {
                 transactions = transactions.Where(t => t.Date > DateLowerBound);
             }
-            else if (AmountUpperBound != null && Convert.ToString(DateUpperBound) != "")
+            else if (AmountUpperBound != null && DateUpperBound != DateTime.MinValue)
             {
                 transactions = transactions.Where(t => t.Date < DateUpperBound);
             }
+
+            // Finally, sort the transactions
+            transactions = transactions.OrderBy(t => t.TransactionID).ThenBy(t => t.TransactionType).ThenBy(t => t.Description).ThenBy(t => t.Amount);
 
             /**
              * END filtering transactions
@@ -247,6 +254,12 @@ namespace FinalGroupProjectTeam8.Controllers
             } else if (BankAccount.AccountType == BankAccount.BankAccountTypeEnum.StockPortfolio) {
 
             }
+
+            SelectedTransactions = transactions.ToList();
+
+            //count # of records
+            ViewBag.TransactionCount = SelectedTransactions.Count();
+            ViewBag.TotalTransactionCount = AllTransactions.Count();
 
             // First, ensure this bank account belongs to current customer
             return View(model);

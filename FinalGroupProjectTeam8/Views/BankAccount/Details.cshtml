@@ -74,7 +74,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DateLowerBound, "Lower Bound Date", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DateLowerBound, new { htmlAttributes = new { @class = "form-control", @Value = Convert.ToString("") } })
+                @Html.EditorFor(model => model.DateLowerBound, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.DateLowerBound, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -82,7 +82,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DateUpperBound, "Upper Bound Date", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DateUpperBound, new { htmlAttributes = new { @class = "form-control", @Value = Convert.ToString("") } })
+                @Html.EditorFor(model => model.DateUpperBound, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.DateUpperBound, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -226,6 +226,7 @@
         </tr>
     }
 </table>
+<p>Displaying @ViewBag.TransactionCount of @ViewBag.TotalTransactionCount records<p />
 
 
 
