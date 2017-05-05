@@ -334,6 +334,35 @@ namespace FinalGroupProjectTeam8.Controllers
                 return RedirectToAction("Error", "Home", new { ErrorMessage = "Please deposit an amount greater than 0." });
             }
 
+            // IRA validation
+            BankAccount BankAccount = db.BankAccounts.Find(deposit.BankAccountID);
+            if (BankAccount.AccountType == BankAccount.BankAccountTypeEnum.IRA)
+            {
+
+                // Age check
+                DateTime zeroTime = new DateTime(1, 1, 1);
+                DateTime a = BankAccount.User.Birthday;
+                DateTime b = DateTime.Now;
+                TimeSpan span = b - a;
+                int years = (zeroTime + span).Year - 1;
+                if (years >= 70) return RedirectToAction("Error", "Home", new { ErrorMessage = "Customers older than 70 may not deposit to an IRA." });
+
+                // Amount check
+                var transactions = db.Transactions.Where(t => t.BankAccountID == deposit.BankAccountID);
+                Decimal sum = 0;
+                foreach (var transaction in transactions) {
+                    if (transaction.TransactionType == Transaction.TransactionTypeEnum.Deposit)
+                        sum = sum + transaction.Amount;
+                }
+                if (sum >= 5000) {
+                    return RedirectToAction("Error", "Home", new { ErrorMessage = "You cannot deposit anymore to your IRA." });
+                } else if (sum + deposit.Amount >= 5000) {
+                    Decimal remainingAllowed = 5000 - sum;
+                    return RedirectToAction("Error", "Home", new { ErrorMessage = "You can only deposit " + remainingAllowed.ToString() + " to your IRA account." });
+                } 
+
+            }
+
             // Any changes
             if (deposit.Amount > 5000)
             {
@@ -344,7 +373,6 @@ namespace FinalGroupProjectTeam8.Controllers
                 deposit.TransactionStatus = Transaction.TransactionStatusEnum.Approved;
 
                 // Must update the balance
-                BankAccount BankAccount = db.BankAccounts.Find(deposit.BankAccountID);
                 BankAccount.Balance = BankAccount.Balance + deposit.Amount;
                 db.SaveChanges();
             }
