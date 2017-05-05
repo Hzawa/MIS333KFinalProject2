@@ -387,6 +387,7 @@
     <Content Include="Views\User\EmployeeHome.cshtml" />
     <Content Include="Views\AppUsers\EditPassword.cshtml" />
     <Content Include="Views\User\ManagerHome.cshtml" />
+    <Content Include="Views\Disputes\Resolve.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

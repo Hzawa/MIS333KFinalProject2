@@ -17,6 +17,9 @@ namespace FinalGroupProjectTeam8.Controllers
         // GET: Disputes
         public ActionResult Index()
         {
+            if (!User.IsInRole("Manager")) {
+                return RedirectToAction("Error", "Home", new { ErrorMessage = "You don't have permission to be here." });
+            }
             var disputes = db.Disputes.Include(d => d.Transaction);
             return View(disputes.ToList());
         }
@@ -32,6 +35,37 @@ namespace FinalGroupProjectTeam8.Controllers
             if (dispute == null)
             {
                 return HttpNotFound();
+            }
+            return View(dispute);
+        }
+
+        // GET: Disputes/Edit/5
+        public ActionResult Resolve(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Dispute dispute = db.Disputes.Find(id);
+            if (dispute == null)
+            {
+                return HttpNotFound();
+            }
+            return View(dispute);
+        }
+
+        // POST: Disputes/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Resolve([Bind(Include = "DisputeID,Comments,DisputeType,CorrentAmount,TransactionID")] Dispute dispute)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(dispute).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
             return View(dispute);
         }

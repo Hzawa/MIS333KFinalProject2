@@ -1,51 +1,64 @@
 ﻿@model IEnumerable<FinalGroupProjectTeam8.Models.Dispute>
 
-@{
-    ViewBag.Title = "Index";
-}
-
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<h2>All Disputes</h2>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Transaction.Description)
+            @Html.DisplayNameFor(model => model.First().Transaction.BankAccount.User.FName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Comments)
+            @Html.DisplayNameFor(model => model.First().Transaction.BankAccount.User.LName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DisputeType)
+            @Html.DisplayNameFor(model => model.First().Transaction.BankAccount.BankAccountID)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CorrentAmount)
+            @Html.DisplayNameFor(model => model.First().Transaction.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Transaction.Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().CorrectAmount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().DisputeType)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Transaction.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Comments)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DisputeType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CorrentAmount)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.DisputeID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.DisputeID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.DisputeID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Transaction.BankAccount.User.FName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Transaction.BankAccount.User.LName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Transaction.BankAccount.BankAccountID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Transaction.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Transaction.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CorrectAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DisputeType)
+            </td>
+            <td>
+                @if (item.DisputeType == FinalGroupProjectTeam8.Models.DisputeTypeEnum.Submitted) {
+                    @Html.ActionLink("Resolve", "Resolve", "Disputes", new { DisputeID = item.DisputeID }, null);
+                } else {
+                    @: N/A
+                }
+            </td>
+        </tr>
+    }
 
 </table>
