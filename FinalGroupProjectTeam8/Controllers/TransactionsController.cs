@@ -359,8 +359,8 @@ namespace FinalGroupProjectTeam8.Controllers
             var accounts = from a in db.BankAccounts
                            where a.UserID.Equals(userId)
                            select a;
-            ViewBag.BankAccountID = new SelectList(accounts, "BankAccountID", "Name");
-            ViewBag.ReceivingBankAccountID = new SelectList(accounts, "BankAccountID", "Name");
+            ViewBag.BankAccountID = new SelectList(accounts, "BankAccountID", "NameIDBalance");
+            ViewBag.ReceivingBankAccountID = new SelectList(accounts, "BankAccountID", "NameIDBalance");
 
             // The actual view to create transfer
             return View();

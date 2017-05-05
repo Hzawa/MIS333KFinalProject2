@@ -39,6 +39,10 @@ namespace FinalGroupProjectTeam8.Models
         {
             get { return "(" + Balance.ToString("C") + ")" + " " + Name;  }
         }
+        public String NameIDBalance
+        {
+            get { return "(" + Balance.ToString("C") + ")" + " " + BankAccountID + " : " + Name; }
+        }
 
     }
 }
