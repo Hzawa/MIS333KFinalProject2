@@ -10,7 +10,7 @@
 </div>
 
 <p>
-    @Html.ActionLink("Create New Payee", "CreatePayee")
+    @Html.ActionLink("Add New Payee", "AddPayee")
 </p>
 <table class="table">
     <tr>
@@ -42,7 +42,7 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.ActionLink(item.Name, "Edit", "Payee", new { id = item.PayeeID }, null)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Street)
@@ -63,8 +63,9 @@
                 @Html.DisplayFor(modelItem => item.Type)
             </td>
             <td>
-                @Html.ActionLink("Details", "Details", "BankAccount"@*, new { BankAccountID = item.BankAccountID }*@, null)
+                @Html.ActionLink("Make Payment", "CreatePayment", "Payee", new { id = item.PayeeID }, null)
             </td>
+
         </tr>
     }
 

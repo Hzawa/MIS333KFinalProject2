@@ -1,0 +1,33 @@
+﻿@model FinalGroupProjectTeam8.Models.Payee
+
+@{
+    ViewBag.Title = "Add New Payee";
+}
+
+<h2>Add Payee</h2>
+
+@using (Html.BeginForm("AddPayee", "Payee", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Please select a previously created payee to add or create your own.</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.ListBox("AllPayees", (SelectList)ViewBag.AllPayees, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Add payee" />
+        </div>
+    </div>
+
+    <p>
+        Don't see what you're looking for? @Html.ActionLink("Create New Payee", "CreatePayee")
+    </p>
+}
