@@ -41,5 +41,31 @@ namespace FinalGroupProjectTeam8.Controllers
             return RedirectToAction("Register", "BankAccount");
         }
 
+        public ActionResult ManageOwnAccount() {
+            String CurrentUserID = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            return ManageAccount(CurrentUserID);
+        }
+
+        public ActionResult ManageAccount(String UserID) {
+
+            // Redirect to right place depending on what type of user we currently have
+            if (User.IsInRole("Manager")) {
+
+            }
+            if (User.IsInRole("Employee")) {
+
+            }
+
+            // We now assume we're working with a customer, just quickly verify they're allowed
+            String CurrentUserID = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            if (CurrentUserID != UserID) {
+                return RedirectToAction("Error", "Home", new { ErrorMessage = "You don't have permission to be here." });
+            }
+
+            // We're good, just redirect to customer details screen
+            return RedirectToAction("Edit", "AppUsers", new { id = UserID });
+
+        }
+
     }
 }
