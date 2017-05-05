@@ -180,15 +180,10 @@ namespace FinalGroupProjectTeam8.Controllers
                 transactions = transactions.Where(t => t.TransactionID.Contains(TransactionID));
             }
 
-            //// Transaction type filter
-            //if (TransactionType == 0)
-            //{
-            //    //query = query
-            //}
-            //else
-            //{
-            //    transactions = transactions.Where(t => t.TransactionType == TransactionType);
-            //}
+            // Transaction type filter
+            if (TransactionType != null && TransactionType != TransactionTypeEnum.All) {
+                transactions = transactions.Where(t => t.TransactionType == TransactionType);
+            }
 
             // Description filter
             if (Description != null && Description != "")
@@ -196,7 +191,7 @@ namespace FinalGroupProjectTeam8.Controllers
                 transactions = transactions.Where(t => t.Description.Contains(Description));
             }
 
-            //Amount filter
+            // Amount filter
             if (AmountLowerBound != null && AmountLowerBound != 0.00m && AmountUpperBound != null && AmountUpperBound != 0.00m)
             {
                 transactions = transactions.Where(t => t.Amount > AmountLowerBound && t.Amount < AmountUpperBound);
@@ -210,7 +205,7 @@ namespace FinalGroupProjectTeam8.Controllers
                 transactions = transactions.Where(t => t.Amount < AmountUpperBound);
             }
 
-            //Date filter
+            // Date filter
             if (DateLowerBound != null && DateLowerBound != DateTime.MinValue && DateUpperBound != null && DateUpperBound != DateTime.MinValue)
             {
                 transactions = transactions.Where(t => t.Date > DateLowerBound);
@@ -257,7 +252,7 @@ namespace FinalGroupProjectTeam8.Controllers
 
             SelectedTransactions = transactions.ToList();
 
-            //count # of records
+            // count # of records
             ViewBag.TransactionCount = SelectedTransactions.Count();
             ViewBag.TotalTransactionCount = AllTransactions.Count();
 
