@@ -20,5 +20,7 @@ namespace FinalGroupProjectTeam8.Models
         public DateTime DateUpperBound { get; set; }
 
         public String BankAccountID { get; set; }
+
+        public Boolean AllowDisputeCreation { get; set; }
     }
 }

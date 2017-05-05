@@ -16,19 +16,40 @@ namespace FinalGroupProjectTeam8.Controllers
         // DB we'll be using for queries
         private AppDbContext db = new AppDbContext();
 
-        public ActionResult Home()
+        public ActionResult Home(String UserID)
         {
             bool loggedIn = System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
             if (!loggedIn) {
+
                 // If not logged in, redirect to home page
                 return RedirectToAction("Index", "Home");
+
             } else {
                 //Otherwise, stay here
 
+                // If no UserID was passed in, and this is an employee/manager account, they obviously don't want to se this CustomerHome method
+                if (UserID == null) {
+                    if (User.IsInRole("Manager")) {
+                        return RedirectToAction("ManagerHome");
+                    }
+                    if (User.IsInRole("Employee")) {
+                        return RedirectToAction("EmployeeHome");
+                    }
+                }
+
                 // Let's get a list of accounts to add to ViewBag
-                var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+                String CurrentUserID = System.Web.HttpContext.Current.User.Identity.GetUserId();
+                if (UserID == null) UserID = CurrentUserID; // To allow employee access
+
+                // Real quick, check if UserID matches CurrentUserID, only allow progression if CurrentUser is at least an employee
+                if (CurrentUserID != UserID) {
+                    if (!User.IsInRole("Employee") && !User.IsInRole("Manager"))
+                        return RedirectToAction("Error", "Home", new { ErrorMessage = "You don't have permission to be here." });
+                }
+
+                // Now get the accounts
                 var accounts = from a in db.BankAccounts
-                               where a.UserID.Equals(userId)
+                               where a.UserID.Equals(UserID)
                                select a;
                 ViewBag.Accounts = accounts;
 
@@ -46,13 +67,28 @@ namespace FinalGroupProjectTeam8.Controllers
             return ManageAccount(CurrentUserID);
         }
 
+        public ActionResult EmployeeHome() {
+
+            // Get the list of users to pass in
+            var users = db.Users.Where(u => u.UserType == UserTypeEnum.Customer);
+
+            // Return the view
+            return View(users.ToList());
+        }
+
         public ActionResult ManageAccount(String UserID) {
 
             // Redirect to right place depending on what type of user we currently have
             if (User.IsInRole("Manager")) {
 
+                // Allow the redirect
+                return RedirectToAction("Edit", "AppUsers", new { id = UserID });
+
             }
             if (User.IsInRole("Employee")) {
+
+                // Allow the redirect
+                return RedirectToAction("Edit", "AppUsers", new { id = UserID });
 
             }
 

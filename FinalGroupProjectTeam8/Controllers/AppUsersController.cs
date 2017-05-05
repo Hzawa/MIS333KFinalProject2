@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using FinalGroupProjectTeam8.Models;
 using System.Data.Entity.Validation;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace FinalGroupProjectTeam8.Controllers
 {
@@ -60,6 +62,57 @@ namespace FinalGroupProjectTeam8.Controllers
         }
 
         // GET: AppUsers/Edit/5
+        public ActionResult EditPassword(string id)
+        {
+
+            // Employees only screen, customers have a separate screen for this
+            if (!User.IsInRole("Employee") && !User.IsInRole("Manager"))
+            {
+                return RedirectToAction("Error", "Home", new { ErrorMessage = "You don't have permission to be here." });
+            }
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            AppUser appUser = db.Users.Find(id);
+            if (appUser == null)
+            {
+                return HttpNotFound();
+            }
+            return View(appUser);
+        }
+
+        // POST: AppUsers/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditPassword(AppUser appUser)
+        {
+
+            // Hash the password
+            String hashedNewPassword = HttpContext.GetOwinContext().GetUserManager<AppUserManager>().PasswordHasher.HashPassword(appUser.PasswordHash);
+
+            // We only want to edit certain fields
+            AppUser EditingAppUser = db.Users.Find(appUser.Id);
+            EditingAppUser.PasswordHash = hashedNewPassword;
+
+            // Update DB
+            db.Entry(EditingAppUser).State = EntityState.Modified;
+            db.SaveChanges();
+
+            // Different redirect for employees / managers
+            if (User.IsInRole("Employee") || User.IsInRole("Manager"))
+            {
+                return View(appUser);
+            }
+
+            // Customers go back to their manage page
+            return RedirectToAction("Index", "Manage");
+        }
+
+        // GET: AppUsers/Edit/5
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -95,12 +148,20 @@ namespace FinalGroupProjectTeam8.Controllers
             EditingAppUser.PhoneNumber = appUser.PhoneNumber;
             EditingAppUser.UserName = appUser.UserName;
 
-            if (ModelState.IsValid)
+            if (TryValidateModel(EditingAppUser))
             {
                 db.Entry(EditingAppUser).State = EntityState.Modified;
                 db.SaveChanges();
+
+                // Different redirect for employees / managers
+                if (User.IsInRole("Employee") || User.IsInRole("Manager")) {
+                    return View(appUser);
+                }
+
+                // Customers go back to their manage page
                 return RedirectToAction("Index", "Manage");
             }
+
             return View(appUser);
         }
 

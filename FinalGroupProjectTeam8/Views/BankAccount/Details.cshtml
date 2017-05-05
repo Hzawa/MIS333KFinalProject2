@@ -110,17 +110,52 @@
                 @Html.DisplayFor(modelItem => item.TransactionStatus)
             </td>
             <td>
-                @if (item.TransactionType == FinalGroupProjectTeam8.Models.Transaction.TransactionTypeEnum.Transfer) {
+                 @{
+                    foreach (var dispute in item.Disputes)
+                    {
+                        if (dispute.DisputeType == FinalGroupProjectTeam8.Models.DisputeTypeEnum.Submitted)
+                        {
+                            @:<span style="color:red;">Dispute<b> @dispute.DisputeType.ToString()
+                            @:</b></span>
+                            @:<a href="../Disputes/Details/
+                            @dispute.DisputeID
+                            @:">Here</a>
+                        }
+                        else {
+                            @:Dispute<b> @dispute.DisputeType.ToString()
+                            @:</b>
+                            @:<a href="../Disputes/Details/
+                            @dispute.DisputeID
+                            @:">Here</a>
+                        }
+                    }
+                }
+                @if (item.TransactionType == FinalGroupProjectTeam8.Models.Transaction.TransactionTypeEnum.Transfer)
+                {
                     @:Sent from @item.BankAccountID to 
                     // @((FinalGroupProjectTeam8.Models.Transfer) item).ReceivingBankAccountID
-                } else
-                {
-                    @:Standard Transaction
                 }
             </td>
             <td>
                 @Html.ActionLink("Details", "Details", "Transactions", new { TransactionID = item.TransactionID }, null) | 
-                @Html.ActionLink("Dispute", "CreateDispute", "Disputes", new { TransactionID = item.TransactionID }, null)
+
+                @{ 
+                    Boolean includeDisputeLink = true;
+                    foreach (var dispute in item.Disputes) {
+                        if (dispute.DisputeType == FinalGroupProjectTeam8.Models.DisputeTypeEnum.Submitted) {
+                            @:<span style="color:red;">Disputed</span>
+                            includeDisputeLink = false;
+                            break;
+                        }
+                    }
+                    if (includeDisputeLink && Model.AllowDisputeCreation)
+                    {
+                        @Html.ActionLink("Dispute", "CreateDispute", "Disputes", new { TransactionID = item.TransactionID }, null);
+                    }
+                    else if (includeDisputeLink && !Model.AllowDisputeCreation) {
+                        @: Dispute (N/A)
+                    }
+                }
             </td>
         </tr>
     }

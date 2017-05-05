@@ -135,7 +135,8 @@ namespace FinalGroupProjectTeam8.Controllers
             // Ensure it belongs to current user
             string UserId = System.Web.HttpContext.Current.User.Identity.GetUserId();
             if (BankAccount.UserID != UserId) {
-                return RedirectToAction("Error", "Home", new { ErrorMessage = "This is not your account." });
+                if (!User.IsInRole("Employee") && User.IsInRole("Manager"))
+                    return RedirectToAction("Error", "Home", new { ErrorMessage = "This is not your account." });
             }
 
             // Ensure it's active
@@ -168,6 +169,15 @@ namespace FinalGroupProjectTeam8.Controllers
 
             // Create the ViewModel
             var model = new BankAccountDetailsViewModel { BankAccountID = BankAccount.BankAccountID, BankAccount = BankAccount, Transactions = transactions.ToList() };
+
+            // Employees/Managers cannot create disputes
+            if (User.IsInRole("Employee") || User.IsInRole("Manager"))
+            {
+                model.AllowDisputeCreation = false;
+            }
+            else {
+                model.AllowDisputeCreation = true;
+            }
 
             // Otherwise we're good, make any changes we need to
             if (BankAccount.AccountType == BankAccount.BankAccountTypeEnum.CheckingAccount) {
@@ -224,7 +234,7 @@ namespace FinalGroupProjectTeam8.Controllers
             BankAccount EditingBankAccount = db.BankAccounts.Find(bankAccount.BankAccountID);
             EditingBankAccount.Name = bankAccount.Name;
 
-            if (ModelState.IsValid)
+            if (TryValidateModel(EditingBankAccount))
             {
                 db.Entry(EditingBankAccount).State = EntityState.Modified;
                 db.SaveChanges();
