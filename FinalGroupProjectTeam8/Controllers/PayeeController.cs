@@ -11,7 +11,7 @@ using System.Net.Mail;
 
 namespace FinalGroupProjectTeam8.Controllers
 {
-    [Authorize(Roles = "BankUser")]
+    
     public class PayeeController : Controller
     {
         private AppDbContext db = new AppDbContext();
