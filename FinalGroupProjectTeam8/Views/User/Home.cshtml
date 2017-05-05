@@ -51,9 +51,10 @@
                 @Html.DisplayFor(modelItem => item.Balance)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AccountType)
+                @Html.DisplayFor(modelItem => item.Active)
             </td>
             <td>
+                @Html.ActionLink("Edit", "Edit/" + item.BankAccountID, "BankAccount") | 
                 @Html.ActionLink("Details", "Details", "BankAccount", new {BankAccountID = item.BankAccountID}, null)
             </td>
         </tr>
