@@ -1,85 +1,135 @@
 ﻿@model FinalGroupProjectTeam8.Models.Transaction
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Transaction Details";
 }
 
-<h2>Details</h2>
+<h2>Transaction Details</h2>
 
-<div>
-    <h4>Transactions</h4>
-    <hr />
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.Description)
+    </dt>
 
+    <dd>
+        @Html.DisplayFor(model => model.Description)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.TransactionType)
+    </dt>
 
+    <dd>
+        @Html.DisplayFor(model => model.TransactionType)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Amount)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Amount)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.TransactionID)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.TransactionID)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Comments)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Comments)
+    </dd>
+</dl>
 
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.BankAccount.Name)
-        </dt>
+<dt>Similar transactions:</dt>
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.Description)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Description)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Amount)
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.BankAccount.Name)
-        </dd>
+    <dd>
+        @Html.DisplayFor(model => model.Amount)
+    </dd>
+</dl>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Disputes.DisputeID)
-        </dt>
+<dl class="dl-horizontal">
+<dt>
+    <th>
+        @Html.DisplayNameFor(model => model.Transactions.First().Description)
+    </th>
+</dt>
+<dd>
+    @Html.DisplayFor(model => model.Description)
+</dd>
+<dt>
+    @Html.DisplayNameFor(model => model.Amount)
+</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Disputes.DisputeID)
-        </dd>
+<dd>
+    @Html.DisplayFor(model => model.Amount)
+</dd>
+</dl>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Payee.Name)
-        </dt>
+<dl class="dl-horizontal">
+<dt>
+    @Html.DisplayNameFor(model => model.Description)
+</dt>
+<dd>
+    @Html.DisplayFor(model => model.Description)
+</dd>
+<dt>
+    @Html.DisplayNameFor(model => model.Amount)
+</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Payee.Name)
-        </dd>
+<dd>
+    @Html.DisplayFor(model => model.Amount)
+</dd>
+</dl>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TransactionType)
-        </dt>
+<dl class="dl-horizontal">
+<dt>
+    @Html.DisplayNameFor(model => model.Description)
+</dt>
+<dd>
+    @Html.DisplayFor(model => model.Description)
+</dd>
+<dt>
+    @Html.DisplayNameFor(model => model.Amount)
+</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.TransactionType)
-        </dd>
+<dd>
+    @Html.DisplayFor(model => model.Amount)
+</dd>
+</dl>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+<dl class="dl-horizontal">
+<dt>
+    @Html.DisplayNameFor(model => model.Description)
+</dt>
+<dd>
+    @Html.DisplayFor(model => model.Description)
+</dd>
+<dt>
+    @Html.DisplayNameFor(model => model.Amount)
+</dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+<dd>
+    @Html.DisplayFor(model => model.Amount)
+</dd>
+</dl>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Amount)
-        </dt>
+<dt class="btn btn-default">
+    @Html.ActionLink("Dispute", "CreateDispute", "Disputes", new { TransactionID = Model.TransactionID }, null)
+</dt>
+ 
 
-        <dd>
-            @Html.DisplayFor(model => model.Amount)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Comments)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Comments)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.TransactionID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+@*<p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.TransactionID }) |
+        @Html.ActionLink("Back to List", "Details", "BankAccount", new { BankAccountID = Model.BankAccountID })
+</p>*@

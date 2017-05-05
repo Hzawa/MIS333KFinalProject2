@@ -13,178 +13,14 @@ using System.Net.Mail;
 
 namespace FinalGroupProjectTeam8.Controllers
 {
-    //enum properties
-    public enum TransactionType { All, Deposit, Withdrawal, Transfer, Bill, Fee }
-
-    //public enum CustomAmounts { FirstHundred, SecondHundred, ThirdHundred, Over300 }
-
-    public enum SortOrder { Ascending, Descending }
-
     public class TransactionsController : Controller
     {
-        public ActionResult Success(String Message)
-        {
-            ViewBag.Message = Message;
-            return View();
-        }
 
         private AppDbContext db = new AppDbContext();
 
-        //method to get all transactions
-        public SelectList GetAllTransactions()
+        public ActionResult Success(String Message)
         {
-            var query = from c in db.Transactions
-                        orderby c.TransactionType
-                        select c.TransactionType;
-
-            List<Transaction.TransactionTypeEnum> allTransactions = query.Distinct().ToList();
-
-            Transaction.TransactionTypeEnum NoChoice = new Transaction.TransactionTypeEnum() { };
-            allTransactions.Add(NoChoice);
-
-            SelectList allTransactionsList = new SelectList(allTransactions);
-
-            return allTransactionsList;
-        }
-
-        //advanced search method
-        public ActionResult SearchResults(String SearchString, String Description/*, TransactonTypeEnum SelectedTransaction, Decimal Amount, String TransactionID, DateTime Date, SortOrder SelectedSortOrder*/)
-        {
-            List<Transaction> SelectedTransactions = new List<Transaction>();
-            List<Transaction> AllTransactions = db.Transactions.ToList();
-
-            //start with db set with wanted data
-            var query = from t in db.Transactions
-                        select t;
-
-            //code for textbox searching
-            if (SearchString == null || SearchString == "") //they didn't select anything
-            {
-                //query = query
-            }
-            else //they picked something
-            {
-                query = query.Where(t => t.Description.Contains(SearchString) || t.TransactionID.Contains(SearchString));
-            }
-
-            ////Transaction drop down list
-            //switch (SelectedTransaction)
-            //{
-            //    case TransactionType.All:
-            //        //query = query 
-            //        break;
-            //    case TransactionType.Bill:
-            //        query = query.Where(t => t.TransactionType == Transaction.TransactionTypeEnum.);
-            //        break;
-            //}
-
-            //Code for radio buttons
-            //switch (SelectedGender)
-            //{
-            //    case Gender.All:
-            //        //query = query 
-            //        break;
-            //    case Gender.Male:
-            //        query = query.Where(c => c.Gender == "Male");
-            //        break;
-            //    case Gender.Female:
-            //        query = query.Where(c => c.Gender == "Female");
-            //        break;
-            //}
-
-            //Code for desired sales textbox
-            //check to see if string is valid
-            //if ( Convert.ToString(Amount) == null || Convert.ToString(Amount) == "")
-            //{
-            //    //query = query 
-            //}
-            //else
-            //{
-            //    try
-            //    {
-            //        Amount = Convert.ToDecimal(Amount);
-            //    }
-
-            //    //code to display when something is wrong
-            //    catch
-            //    {
-            //        //add message for viewbag
-            //        ViewBag.Message = Amount + " is not a valid number. Please try again.";
-
-            //        //re-populate dropdown
-            //        ViewBag.TransactionType = GetAllTransactions();
-
-            //        //send user back to advanced search pagee
-            //        return View("Transactions/Details");
-            //    }
-
-            //radio buttons for specific parameters 
-            //switch (Convert.ToString(Amount))
-            //    {
-            //        case :
-            //        {
-            //            query = query.Where(c => c.AverageSale >= decSalesAmount);
-            //            break;
-            //        }
-            //        case CustomAmounts.FirstHundred:
-            //        {
-            //            query = query.Where(c => c.AverageSale <= decSalesAmount);
-            //            break;
-            //        }
-            //        case CustomAmounts.FirstHundred:
-            //        {
-            //            query = query.Where(c => c.AverageSale <= decSalesAmount);
-            //            break;
-            //        }
-            //        case CustomAmounts.FirstHundred:
-            //        {
-            //            query = query.Where(c => c.AverageSale <= decSalesAmount);
-            //            break;
-            //        }
-            //   }
-            //}
-
-            // Transaction Date
-            //if (daysBack == 0)
-            //{
-            //    // Display / add to view bag
-            //    ViewBag.NumberSelectedTransactions = db.Transactions.ToList().Count;
-
-            //    // Display list
-            //    return View(db.Transactions.ToList());
-            //}
-            //else
-            //{
-            //    var oldestDate = (DateTime.Today).AddDays(Convert.ToDouble(daysBack) * -1);
-
-            //    query = from t in db.Transactions
-            //            where t.TransactionDate >= oldestDate
-            //            select t;
-
-            //}
-
-            SelectedTransactions = query.ToList();
-
-            //count # of records
-            ViewBag.CustomerCount = SelectedTransactions.Count();
-            ViewBag.TotalCustomerCount = AllTransactions.Count();
-
-            //return limited queries
-            return View("Transactions/Details", SelectedTransactions.OrderBy(t => t.TransactionID).ThenBy(t => t.TransactionType).ThenBy(t => t.Description).ThenBy(t => t.Amount));
-        }
-
-
-
-
-        public ActionResult Search() {
-            // Kevin work here
-
-            return View();
-        }
-
-        public ActionResult SearchResults() {
-            // Kevin work here
-
+            ViewBag.Message = Message;
             return View();
         }
 
@@ -280,6 +116,17 @@ namespace FinalGroupProjectTeam8.Controllers
         // GET: Transactions/Details/5
         public ActionResult Details(string id)
         {
+
+            // Get an instance of current transaction
+            Transaction Transaction = db.Transactions.Find(id);
+
+            //find most recent transactions
+            var transactions = from t in db.Transactions
+                               where t.TransactionType.Equals(Transaction.TransactionType)
+                               orderby t.Date
+                               select t;
+            List<Transaction> AllTransactions = transactions.ToList();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -291,7 +138,6 @@ namespace FinalGroupProjectTeam8.Controllers
             }
             return View(transaction);
         }
-
 
         public ActionResult CreateTransaction()
         {
