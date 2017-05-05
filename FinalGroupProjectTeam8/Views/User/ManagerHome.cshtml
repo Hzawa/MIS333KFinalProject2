@@ -1,0 +1,113 @@
+﻿@model FinalGroupProjectTeam8.Models.ManagerHomeViewModel
+
+@{
+    ViewBag.Title = "Manager Home";
+}
+
+
+<h2>Manager Home</h2>
+<p>
+    <a class="btn btn-primary" href="/Manager/AddNewStock">Add New Stock</a>
+    <a class="btn btn-primary" href="/Manager/ProcessStockPortfolios">Process Stock Portfolios</a>
+    <a class="btn btn-primary" href="/Manager/EmployeeManagement">Employee Management</a>
+</p>
+
+<h2>Unresolved Disputes</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Disputes.First().Transaction.BankAccount.User.FName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Disputes.First().Transaction.BankAccount.User.LName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Disputes.First().Transaction.BankAccount.BankAccountID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Disputes.First().Transaction.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Disputes.First().Transaction.Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Disputes.First().CorrectAmount)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Disputes)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Transaction.BankAccount.User.FName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Transaction.BankAccount.User.LName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Transaction.BankAccount.BankAccountID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Transaction.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Transaction.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CorrectAmount)
+            </td>
+            <td>
+                @Html.ActionLink("Resolve", "Resolve", "Disputes", new { DisputeID = item.DisputeID }, null)
+            </td>
+        </tr>
+    }
+
+</table>
+
+<h2>Pending Transactions</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Transactions.First().BankAccount.User.FName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Transactions.First().BankAccount.User.LName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Transactions.First().BankAccount.BankAccountID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Transactions.First().Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Transactions.First().Amount)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Transactions)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BankAccount.User.FName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BankAccount.User.LName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BankAccount.BankAccountID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.ActionLink("Resolve", "Resolve", "Transactions", new { TransactionID = item.TransactionID }, null)
+            </td>
+        </tr>
+    }
+
+</table>

@@ -76,6 +76,22 @@ namespace FinalGroupProjectTeam8.Controllers
             return View(users.ToList());
         }
 
+        public ActionResult ManagerHome() {
+
+            // Get unresolved disputes
+            var disputes = db.Disputes.Where(d => d.DisputeType == DisputeTypeEnum.Submitted);
+
+            // Get unresolved transactions
+            var transactions = db.Transactions.Where(t => t.TransactionStatus == Transaction.TransactionStatusEnum.Approved);
+
+            // Create the view model
+            ManagerHomeViewModel ManagerHomeViewModel = new ManagerHomeViewModel();
+            ManagerHomeViewModel.Disputes = disputes.ToList();
+            ManagerHomeViewModel.Transactions = transactions.ToList();
+
+            return View(ManagerHomeViewModel);
+        }
+
         public ActionResult ManageAccount(String UserID) {
 
             // Redirect to right place depending on what type of user we currently have
