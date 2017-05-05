@@ -105,5 +105,9 @@ namespace FinalGroupProjectTeam8.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "Birth Year")]
+        public string BirthYear { get; set; }
     }
 }
