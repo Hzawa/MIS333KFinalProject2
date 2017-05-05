@@ -354,6 +354,15 @@ namespace FinalGroupProjectTeam8.Controllers
                     if (transaction.TransactionType == Transaction.TransactionTypeEnum.Deposit)
                         sum = sum + transaction.Amount;
                 }
+
+                // Include receiving transfers
+                var transactionsI = db.Transactions.Where(t => t.TransactionType == Transaction.TransactionTypeEnum.Transfer);
+                foreach (var transaction in transactionsI)
+                {
+                    if (((Transfer)transaction).ReceivingBankAccountID == BankAccount.BankAccountID)
+                        sum = sum + transaction.Amount;
+                }
+
                 if (sum >= 5000) {
                     return RedirectToAction("Error", "Home", new { ErrorMessage = "You cannot deposit anymore to your IRA." });
                 } else if (sum + deposit.Amount >= 5000) {

@@ -39,6 +39,12 @@ namespace FinalGroupProjectTeam8.Controllers
                 // Different behavior and checks depending on account type
                 BankAccount.BankAccountTypeEnum BankAccountType = BankAccount.AccountType;
 
+                // Store this for later
+                Decimal initialDeposit = BankAccount.Balance;
+                if (initialDeposit < 0) {
+                    return RedirectToAction("Error", "Home", new { ErrorMessage = "Cannot have negative initial deposit." });
+                }
+
                 // Only 1 IRA account
                 if (BankAccountType == BankAccount.BankAccountTypeEnum.IRA)
                 {
@@ -76,11 +82,10 @@ namespace FinalGroupProjectTeam8.Controllers
                 if (BankAccountType == BankAccount.BankAccountTypeEnum.IRA || BankAccountType == BankAccount.BankAccountTypeEnum.CheckingAccount)
                 {
                     // Check to see if initial deposit greater than $5000
-                    Decimal initialDeposit = BankAccount.Balance;
                     if (initialDeposit > 5000)
                     {
                         // Manager must approve if deposit > $5000    
-                        BankAccount.Active = false;
+                        BankAccount.Balance = 0;
                     }
                 }
 
@@ -105,6 +110,40 @@ namespace FinalGroupProjectTeam8.Controllers
 
                 // Adding the object to the DB
                 db.BankAccounts.Add(BankAccount);
+                db.SaveChanges();
+
+                /**
+                 * Add initial transaction as a deposit
+                 */
+
+                // Give this transaction the right primary key
+                String TransactionID = "";
+                var idObjectT = db.Transactions.OrderByDescending(b => b.TransactionID).FirstOrDefault();
+                if (idObject == null) TransactionID = "1000000000";
+                else
+                {
+                    int nextId = Convert.ToInt32(idObjectT.TransactionID) + 1;
+                    String nextIdString = nextId.ToString();
+                    TransactionID = nextIdString;
+                }
+
+                // Create Overdraft fee
+                Transaction Transaction = new Models.Transaction();
+
+                // Give this transaction the right primary key
+                Transaction.TransactionID = TransactionID;
+
+                // Other properties
+                Transaction.TransactionType = Transaction.TransactionTypeEnum.Deposit;
+                Transaction.Description = "Initial Deposit";
+                Transaction.Date = DateTime.Now;
+                Transaction.BankAccountID = BankAccount.BankAccountID;
+                Transaction.Amount = initialDeposit;
+                if (initialDeposit > 5000)
+                    Transaction.TransactionStatus = Transaction.TransactionStatusEnum.Pending;
+                else
+                    Transaction.TransactionStatus = Transaction.TransactionStatusEnum.Approved;
+                db.Transactions.Add(Transaction);
                 db.SaveChanges();
 
                 // Redirect to the right page
