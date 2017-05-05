@@ -5,68 +5,68 @@
 
 
 <!-- Show balance -->
-<h2>Account: @Model.BankAccount.Name</h2>
-<h3>Balance: @Model.BankAccount.Balance</h3>
+<h2>@Model.BankAccount.Name</h2>
+<p>Balance: @Model.BankAccount.Balance</p>
+<hr />
 
 
-@*display advanced search*@
-@using (Html.BeginForm("SearchResults", "Details", FormMethod.Get))
+<!-- <button class="btn-btn-primary" data-toggle="collapse" data-target="#search-form">Search</button> -->
+<p>
+    <a class="btn btn-primary" data-toggle="collapse" data-target="#search-form">Search</a>
+    <a class="btn btn-primary" href="/Transactions/CreateTransaction">Create new transaction</a>
+</p>
+
+<!-- Advanced Search -->
+@using (Html.BeginForm("Details", "BankAccount", FormMethod.Post))
 {
-    //Search textbox
-    <p class="form-group">
-        Name: @Html.TextBox("SearchString", null, new { @class = "form-control" }) 
+    @Html.AntiForgeryToken()
 
-        @*Transaction dropdown list*@
-        @*@Html.DropDownList("SelectedTransaction", (SelectList)ViewBag.TransactionID, new { @class = "form-control" })*@
-    </p>
-    @*//gender radio buttons
+    <div id="search-form" class="form-horizontal collapse">
+
         <div class="form-group">
-            <div class="form-check">
-                <label class="form-check-label">
-                    @Html.RadioButton("SelectedGender", Gender.All, true, new { @class = "form-check-input" }) All
-                </label>
-            </div>
-            <div class="form-check">
-                <label class="form-check-label">
-                    @Html.RadioButton("SelectedGender", Gender.Male, new { @class = "form-check-input" }) Male
-                </label>
-            </div>
-            <div class="form-check">
-                <label class="form-check-label">
-                    @Html.RadioButton("SelectedGender", Gender.Female, new { @class = "form-check-input" }) Female
-                </label>
+            @Html.LabelFor(model => model.BankAccountID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BankAccountID, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control", @Value = Model.BankAccountID } })
+                @Html.ValidationMessageFor(model => model.BankAccountID, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        //textbox for sales amount
         <div class="form-group">
-            Average Sales: @Html.TextBox("DesiredSales", null, new { @class = "form-control" }) <div class="text-danger">@ViewBag.Message</div>
-            @*radio buttons for sort order*@
-    @*<label class="form-check-label">
-                @Html.RadioButton("SelectedSortOrder", SortOrder.Ascending, true, new { @class = "form-check-input" }) Greater than
-            </label><br />
-            <label class="form-check-label">
-                @Html.RadioButton("SelectedSortOrder", SortOrder.Descending, new { @class = "form-check-input" }) Less Than
-            </label>
-        </div>*@
-    //submit search button
-    <input type="submit" value="Search" class="btn btn-default" />    <br />
+            @Html.LabelFor(model => model.DescriptionFilter, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DescriptionFilter, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DescriptionFilter, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Search" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
 }
 
 <!-- Show list of transactions -->
-<p>
-    @Html.ActionLink("Create new transaction", "CreateTransaction", "Transactions")
-</p>
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.Transactions.First().Description)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Transactions.First().TransactionType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Transactions.First().Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Transactions.First().TransactionID)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Transactions.First().Date)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Transactions.First().Amount)
+            @Html.DisplayNameFor(model => model.Transactions.First().Comments)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Transactions.First().TransactionStatus)
@@ -81,13 +81,22 @@
     {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.TransactionType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TransactionID)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Amount)
+                @Html.DisplayFor(modelItem => item.Comments)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TransactionStatus)

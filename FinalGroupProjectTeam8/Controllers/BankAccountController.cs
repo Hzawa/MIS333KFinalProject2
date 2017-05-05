@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using System.Net;
 using System.Data.Entity;
+using static FinalGroupProjectTeam8.Models.Transaction;
 
 namespace FinalGroupProjectTeam8.Controllers
 {
@@ -118,7 +119,7 @@ namespace FinalGroupProjectTeam8.Controllers
             return View();
         }
 
-        public ActionResult Details(String BankAccountID) {
+        public ActionResult Details(String BankAccountID, String TransactionID, String Description, TransactionTypeEnum? TransactionType, Decimal? AmountLowerBound, Decimal? AmountUpperBound, DateTime? DateLowerBound, DateTime? DateUpperBound) {
 
             // Query for given bank account ID
             var accounts = from a in db.BankAccounts
@@ -137,13 +138,31 @@ namespace FinalGroupProjectTeam8.Controllers
                 return RedirectToAction("Error", "Home", new { ErrorMessage = "This is not your account." });
             }
 
+            // Ensure it's active
+            if (BankAccount.Active == false) {
+                return RedirectToAction("Error", "Home", new { ErrorMessage = "This account is not active. Contact a manager for further advising." });
+            }
+
             // Get transactions associated with this bank account
             var transactions = from t in db.Transactions
                                where t.BankAccountID == BankAccount.BankAccountID
                                select t;
 
+            /**
+             * START filtering transactions
+             */
+
+            // Description filter?
+            if (Description != null && Description != "") {
+                transactions = transactions.Where(t => t.Description.Contains(Description));
+            }
+
+            /**
+             * END filtering transactions
+             */ 
+
             // Create the ViewModel
-            var model = new BankAccountDetailsViewModel { BankAccount = BankAccount, Transactions = transactions.ToList() };
+            var model = new BankAccountDetailsViewModel { BankAccountID = BankAccount.BankAccountID, BankAccount = BankAccount, Transactions = transactions.ToList() };
 
             // Otherwise we're good, make any changes we need to
             if (BankAccount.AccountType == BankAccount.BankAccountTypeEnum.CheckingAccount) {
@@ -158,6 +177,18 @@ namespace FinalGroupProjectTeam8.Controllers
 
             // First, ensure this bank account belongs to current customer
             return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Details(BankAccountDetailsViewModel BankAccountDetailsViewModel)
+        {
+            return RedirectToAction
+                ("Details", "BankAccount",
+                new {
+                    BankAccountID = BankAccountDetailsViewModel.BankAccountID,
+                    Description = BankAccountDetailsViewModel.DescriptionFilter
+                });
         }
 
         // GET: BankAccounts/Edit/5

@@ -32,7 +32,7 @@ namespace FinalGroupProjectTeam8.Models
 
         // ShortID for displaying ID with last 4 characters
         public String ShortBankAccountID {
-            get { return BankAccountID.Substring(Math.Max(0, BankAccountID.Length - 4)); }
+            get { return "XXXXXX" + BankAccountID.Substring(Math.Max(0, BankAccountID.Length - 4)); }
         }
 
     }
