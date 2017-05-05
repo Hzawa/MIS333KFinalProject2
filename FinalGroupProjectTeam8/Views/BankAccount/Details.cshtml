@@ -203,7 +203,7 @@
                 }
             </td>
             <td>
-                @Html.ActionLink("Details", "Details", "Transactions", new { TransactionID = item.TransactionID }, null) | 
+                @Html.ActionLink("Details", "Details/" + item.TransactionID, "Transactions") | 
 
                 @{ 
                     Boolean includeDisputeLink = true;
