@@ -17,7 +17,6 @@ namespace FinalGroupProjectTeam8.Controllers
         private AppDbContext db = new AppDbContext();
 
         // GET: /Account/Register
-        [Authorize(Roles = "BankUser, Manager, Employee")]
         public ActionResult Register()
         {
             return View();
@@ -119,7 +118,7 @@ namespace FinalGroupProjectTeam8.Controllers
                 // Give this transaction the right primary key
                 String TransactionID = "";
                 var idObjectT = db.Transactions.OrderByDescending(b => b.TransactionID).FirstOrDefault();
-                if (idObject == null) TransactionID = "1000000000";
+                if (idObjectT == null) TransactionID = "1000000000";
                 else
                 {
                     int nextId = Convert.ToInt32(idObjectT.TransactionID) + 1;
