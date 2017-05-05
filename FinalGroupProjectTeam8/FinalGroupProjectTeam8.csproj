@@ -296,12 +296,8 @@
     <Compile Include="Controllers\RoleAdminController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Migrations\201705051142181_Initial.cs" />
-    <Compile Include="Migrations\201705051142181_Initial.Designer.cs">
-      <DependentUpon>201705051142181_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ManagerHomeViewModel.cs" />
+    <Compile Include="Models\TransactionsDetailsViewModel.cs" />
     <Compile Include="Utility\EmailMessaging.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -384,11 +380,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705051142181_Initial.resx">
-      <DependentUpon>201705051142181_Initial.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

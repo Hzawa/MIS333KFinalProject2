@@ -18,6 +18,7 @@ namespace FinalGroupProjectTeam8.Models
         [Required(ErrorMessage = "Comments are required.")]
         public String Comments { get; set; }
 
+        [Display(Name = "Dispute Type")]
         public DisputeTypeEnum DisputeType { get; set; }
 
         [Display(Name = "Correct Amount")]

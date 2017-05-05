@@ -117,26 +117,27 @@ namespace FinalGroupProjectTeam8.Controllers
         public ActionResult Details(string id)
         {
 
-            // Get an instance of current transaction
-            Transaction Transaction = db.Transactions.Find(id);
-
-            //find most recent transactions
-            var transactions = from t in db.Transactions
-                               where t.TransactionType.Equals(Transaction.TransactionType)
-                               orderby t.Date
-                               select t;
-            List<Transaction> AllTransactions = transactions.ToList();
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Transaction transaction = db.Transactions.Find(id);
-            if (transaction == null)
+
+            // Get an instance of current transaction
+            Transaction Transaction = db.Transactions.Find(id);
+
+            if (Transaction == null)
             {
                 return HttpNotFound();
             }
-            return View(transaction);
+
+            //find most recent transactions
+            var transactions = db.Transactions.Where(t => t.TransactionType == Transaction.TransactionType).Where(t => t.BankAccountID == Transaction.BankAccountID).OrderByDescending(t => t.Date).Take(5);
+
+            // Populate view model and load the final view
+            TransactionsDetailsViewModel tdvm = new TransactionsDetailsViewModel();
+            tdvm.Transaction = Transaction;
+            tdvm.Transactions = transactions.ToList();
+            return View(tdvm);
         }
 
         public ActionResult CreateTransaction()

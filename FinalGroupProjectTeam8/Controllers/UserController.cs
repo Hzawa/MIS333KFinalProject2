@@ -72,6 +72,9 @@ namespace FinalGroupProjectTeam8.Controllers
 
         public ActionResult EmployeeHome() {
 
+            if (!User.IsInRole("Employee") && !User.IsInRole("Manager"))
+                return RedirectToAction("Error", "Home", new { ErrorMessage = "You don't have permission to be here." });
+
             // Get the list of users to pass in
             var users = db.Users.Where(u => u.UserType == UserTypeEnum.Customer);
 
@@ -80,6 +83,9 @@ namespace FinalGroupProjectTeam8.Controllers
         }
 
         public ActionResult ManagerHome() {
+
+            if (!User.IsInRole("Manager"))
+                return RedirectToAction("Error", "Home", new { ErrorMessage = "You don't have permission to be here." });
 
             // Get unresolved disputes
             var disputes = db.Disputes.Where(d => d.DisputeType == DisputeTypeEnum.Submitted);

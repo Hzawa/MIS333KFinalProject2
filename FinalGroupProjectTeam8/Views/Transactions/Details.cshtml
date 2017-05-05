@@ -1,4 +1,4 @@
-﻿@model FinalGroupProjectTeam8.Models.Transaction
+﻿@model FinalGroupProjectTeam8.Models.TransactionsDetailsViewModel
 
 @{
     ViewBag.Title = "Transaction Details";
@@ -8,128 +8,96 @@
 
 <dl class="dl-horizontal">
     <dt>
-        @Html.DisplayNameFor(model => model.Description)
+        @Html.DisplayNameFor(model => model.Transaction.Description)
     </dt>
 
     <dd>
-        @Html.DisplayFor(model => model.Description)
+        @Html.DisplayFor(model => model.Transaction.Description)
     </dd>
     <dt>
-        @Html.DisplayNameFor(model => model.TransactionType)
+        @Html.DisplayNameFor(model => model.Transaction.TransactionType)
     </dt>
 
     <dd>
-        @Html.DisplayFor(model => model.TransactionType)
+        @Html.DisplayFor(model => model.Transaction.TransactionType)
     </dd>
     <dt>
-        @Html.DisplayNameFor(model => model.Amount)
+        @Html.DisplayNameFor(model => model.Transaction.Amount)
     </dt>
     <dd>
-        @Html.DisplayFor(model => model.Amount)
+        @Html.DisplayFor(model => model.Transaction.Amount)
     </dd>
     <dt>
-        @Html.DisplayNameFor(model => model.TransactionID)
+        @Html.DisplayNameFor(model => model.Transaction.TransactionID)
     </dt>
     <dd>
-        @Html.DisplayFor(model => model.TransactionID)
+        @Html.DisplayFor(model => model.Transaction.TransactionID)
     </dd>
     <dt>
-        @Html.DisplayNameFor(model => model.Comments)
+        @Html.DisplayNameFor(model => model.Transaction.Comments)
     </dt>
     <dd>
-        @Html.DisplayFor(model => model.Comments)
+        @Html.DisplayFor(model => model.Transaction.Comments)
+    </dd>
+    <dt>
+       
+    </dt>
+    <dd>
+        @Html.ActionLink("Dispute", "CreateDispute", "Disputes", new { TransactionID = Model.Transaction.TransactionID }, null)
     </dd>
 </dl>
 
 <dt>Similar transactions:</dt>
-<dl class="dl-horizontal">
-    <dt>
-        @Html.DisplayNameFor(model => model.Description)
-    </dt>
-    <dd>
-        @Html.DisplayFor(model => model.Description)
-    </dd>
-    <dt>
-        @Html.DisplayNameFor(model => model.Amount)
-    </dt>
+<!-- Show list of transactions -->
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Transactions.First().Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Transactions.First().TransactionType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Transactions.First().Amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Transactions.First().TransactionID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Transactions.First().Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Transactions.First().Comments)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Transactions.First().TransactionStatus)
+        </th>
+    </tr>
 
-    <dd>
-        @Html.DisplayFor(model => model.Amount)
-    </dd>
-</dl>
-
-<dl class="dl-horizontal">
-<dt>
-    <th>
-        @Html.DisplayNameFor(model => model.Transactions.First().Description)
-    </th>
-</dt>
-<dd>
-    @Html.DisplayFor(model => model.Description)
-</dd>
-<dt>
-    @Html.DisplayNameFor(model => model.Amount)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.Amount)
-</dd>
-</dl>
-
-<dl class="dl-horizontal">
-<dt>
-    @Html.DisplayNameFor(model => model.Description)
-</dt>
-<dd>
-    @Html.DisplayFor(model => model.Description)
-</dd>
-<dt>
-    @Html.DisplayNameFor(model => model.Amount)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.Amount)
-</dd>
-</dl>
-
-<dl class="dl-horizontal">
-<dt>
-    @Html.DisplayNameFor(model => model.Description)
-</dt>
-<dd>
-    @Html.DisplayFor(model => model.Description)
-</dd>
-<dt>
-    @Html.DisplayNameFor(model => model.Amount)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.Amount)
-</dd>
-</dl>
-
-<dl class="dl-horizontal">
-<dt>
-    @Html.DisplayNameFor(model => model.Description)
-</dt>
-<dd>
-    @Html.DisplayFor(model => model.Description)
-</dd>
-<dt>
-    @Html.DisplayNameFor(model => model.Amount)
-</dt>
-
-<dd>
-    @Html.DisplayFor(model => model.Amount)
-</dd>
-</dl>
-
-<dt class="btn btn-default">
-    @Html.ActionLink("Dispute", "CreateDispute", "Disputes", new { TransactionID = Model.TransactionID }, null)
-</dt>
- 
-
-@*<p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.TransactionID }) |
-        @Html.ActionLink("Back to List", "Details", "BankAccount", new { BankAccountID = Model.BankAccountID })
-</p>*@
+    @foreach (var item in Model.Transactions)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TransactionType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TransactionID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comments)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TransactionStatus)
+            </td>
+        </tr>
+                    }
+</table>

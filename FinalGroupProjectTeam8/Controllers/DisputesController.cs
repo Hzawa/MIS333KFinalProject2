@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using FinalGroupProjectTeam8.Models;
 using System.Net.Mail;
+using Microsoft.AspNet.Identity;
 
 namespace FinalGroupProjectTeam8.Controllers
 {
@@ -63,10 +64,14 @@ namespace FinalGroupProjectTeam8.Controllers
         public ActionResult Resolve(Dispute dispute)
         {
 
+            // Get current user
+            string UserId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            AppUser AppUser = db.Users.Find(UserId);
+
             // Update the dispute
             Dispute EditedDispute = db.Disputes.Find(dispute.DisputeID);
             EditedDispute.DisputeType = dispute.DisputeType;
-            EditedDispute.Comments = EditedDispute.Comments + "--Manager:" + dispute.Comments;
+            EditedDispute.Comments = EditedDispute.Comments + "--Manager(" + AppUser.Email + "):" + dispute.Comments;
 
             if (EditedDispute.DisputeType == DisputeTypeEnum.Adjusted) {
                 EditedDispute.CorrectAmount = dispute.CorrectAmount;
@@ -115,7 +120,7 @@ namespace FinalGroupProjectTeam8.Controllers
             // Send the user an email
             MailMessage m = new MailMessage(new MailAddress("333kprojteam8@gmail.com"), new MailAddress(dispute.Transaction.BankAccount.User.Email));
             m.Subject = "[Team 8] Dispute Resolved";
-            m.Body = string.Format("Your dispute with ID " + dispute.DisputeID + "' was resolved.");
+            m.Body = string.Format("Your dispute with ID " + dispute.DisputeID + "' was resolved. The comments are as following. " + dispute.Comments);
             m.IsBodyHtml = true;
             SmtpClient smtp = new SmtpClient("smtp.gmail.com");
             smtp.Send(m);

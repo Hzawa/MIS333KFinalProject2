@@ -11,9 +11,11 @@ namespace FinalGroupProjectTeam8.Models
     {
         
         public enum TransactionTypeEnum { All, Withdrawal, Deposit, Transfer, Payment, Fee }
+        [Display(Name = "Transaction Type")]
         public TransactionTypeEnum TransactionType { get; set; }
 
         public enum TransactionStatusEnum { Pending, Approved, Rejected }
+        [Display(Name = "Transaction Status")]
         public TransactionStatusEnum TransactionStatus { get; set; }
 
         [Display(Name = "Transaction Number")]
