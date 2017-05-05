@@ -53,6 +53,9 @@ namespace FinalGroupProjectTeam8.Controllers
                                select a;
                 ViewBag.Accounts = accounts;
 
+                // If accounts is empty, redirect
+                if (accounts.Count() == 0) return RedirectToAction("ApplyForAccount");
+
                 //Finally, return the view
                 return View(accounts.ToList());
             }
