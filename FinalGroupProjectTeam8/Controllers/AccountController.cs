@@ -9,6 +9,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using FinalGroupProjectTeam8.Models;
+using Microsoft.Owin.Security.DataProtection;
+using System.Net.Mail;
+using System.Configuration;
 
 namespace FinalGroupProjectTeam8.Controllers
 {
@@ -178,9 +181,20 @@ namespace FinalGroupProjectTeam8.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
+                var provider = new DpapiDataProtectionProvider("333KProj");
+                UserManager.UserTokenProvider = new DataProtectorTokenProvider<AppUser>(provider.Create("ForgotPassword"));
+
                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                // New Email code
+                MailMessage m = new MailMessage(new MailAddress("333kprojteam8@gmail.com"), new MailAddress(model.Email));
+                m.Subject = "[Team 8] Reset Password";
+                m.Body = string.Format("Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                m.IsBodyHtml = true;
+                SmtpClient smtp = new SmtpClient("smtp.gmail.com");
+                smtp.Send(m);
+
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
@@ -221,6 +235,10 @@ namespace FinalGroupProjectTeam8.Controllers
                 // Don't reveal that the user does not exist
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
+
+            var provider = new DpapiDataProtectionProvider("333KProj");
+            UserManager.UserTokenProvider = new DataProtectorTokenProvider<AppUser>(provider.Create("ForgotPassword"));
+
             var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
             if (result.Succeeded)
             {

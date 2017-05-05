@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using FinalGroupProjectTeam8.Models;
 using Microsoft.AspNet.Identity;
 using System.Data.Entity.Validation;
+using System.Net.Mail;
 
 namespace FinalGroupProjectTeam8.Controllers
 {
@@ -243,6 +244,14 @@ namespace FinalGroupProjectTeam8.Controllers
                 db.Entry(BankAccount).State = EntityState.Modified;
                 db.SaveChanges();
 
+                // Send the user an email
+                MailMessage m = new MailMessage(new MailAddress("333kprojteam8@gmail.com"), new MailAddress(BankAccount.User.Email));
+                m.Subject = "[Team 8] Transaction Approved";
+                m.Body = string.Format("Your transaction for " + Transaction.Amount + " was approved.");
+                m.IsBodyHtml = true;
+                SmtpClient smtp = new SmtpClient("smtp.gmail.com");
+                smtp.Send(m);
+
             }
 
             // Finally, update the dispute
@@ -419,6 +428,14 @@ namespace FinalGroupProjectTeam8.Controllers
                 // Update Balance
                 NewBalance = NewBalance - Transaction.Amount;
 
+                // Send the user an email
+                MailMessage m = new MailMessage(new MailAddress("333kprojteam8@gmail.com"), new MailAddress(BankAccount.User.Email));
+                m.Subject = "[Team 8] Overdraft fee";
+                m.Body = string.Format("Your account has been hit with an overdraft fee of $30.00. Your new account balance is " + NewBalance.ToString() + ".");
+                m.IsBodyHtml = true;
+                SmtpClient smtp = new SmtpClient("smtp.gmail.com");
+                smtp.Send(m);
+
             } else if (NewBalance < -50) {
                 return RedirectToAction("Error", "Home", new { ErrorMessage = "This transaction would bring this account below -$50.00. You are not allowed to make this transaction." });
             }
@@ -513,6 +530,14 @@ namespace FinalGroupProjectTeam8.Controllers
 
                 // Update Balance
                 NewBalance = NewBalance - Transaction.Amount;
+
+                // Send the user an email
+                MailMessage m = new MailMessage(new MailAddress("333kprojteam8@gmail.com"), new MailAddress(BankAccount.User.Email));
+                m.Subject = "[Team 8] Overdraft fee";
+                m.Body = string.Format("Your account has been hit with an overdraft fee of $30.00. Your new account balance is " + NewBalance.ToString() + ".");
+                m.IsBodyHtml = true;
+                SmtpClient smtp = new SmtpClient("smtp.gmail.com");
+                smtp.Send(m);
 
             }
             else if (NewBalance < -50)

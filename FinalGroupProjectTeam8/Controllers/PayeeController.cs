@@ -7,7 +7,7 @@ using FinalGroupProjectTeam8.Models;
 using Microsoft.AspNet.Identity;
 using System.Net;
 using System.Data.Entity;
-
+using System.Net.Mail;
 
 namespace FinalGroupProjectTeam8.Controllers
 {
@@ -184,6 +184,14 @@ namespace FinalGroupProjectTeam8.Controllers
 
                 // Update Balance
                 NewBalance = NewBalance - Transaction.Amount;
+
+                // Send the user an email
+                MailMessage m = new MailMessage(new MailAddress("333kprojteam8@gmail.com"), new MailAddress(BankAccount.User.Email));
+                m.Subject = "[Team 8] Overdraft fee";
+                m.Body = string.Format("Your account has been hit with an overdraft fee of $30.00. Your new account balance is " + NewBalance.ToString() + ".");
+                m.IsBodyHtml = true;
+                SmtpClient smtp = new SmtpClient("smtp.gmail.com");
+                smtp.Send(m);
 
             }
             else if (NewBalance < -50)

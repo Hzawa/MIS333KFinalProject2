@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using FinalGroupProjectTeam8.Models;
+using System.Net.Mail;
 
 namespace FinalGroupProjectTeam8.Controllers
 {
@@ -110,6 +111,14 @@ namespace FinalGroupProjectTeam8.Controllers
                 db.SaveChanges();
 
             }
+
+            // Send the user an email
+            MailMessage m = new MailMessage(new MailAddress("333kprojteam8@gmail.com"), new MailAddress(dispute.Transaction.BankAccount.User.Email));
+            m.Subject = "[Team 8] Dispute Resolved";
+            m.Body = string.Format("Your dispute with ID " + dispute.DisputeID + "' was resolved.");
+            m.IsBodyHtml = true;
+            SmtpClient smtp = new SmtpClient("smtp.gmail.com");
+            smtp.Send(m);
 
             // Finally, update the dispute
             ModelState.Clear();
