@@ -28,14 +28,11 @@ namespace FinalGroupProjectTeam8.Controllers
             {
                 //Otherwise, stay here
                 // Let's get a list of payees to add to ViewBag
-                //var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-                var payees = from p in db.Payees
-                             //where p.PayeeID.Equals(userId)
-                             select p;
-                ViewBag.Payees = payees;
+                var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+                AppUser AppUser = db.Users.Find(userId);
 
                 //Finally, return the view
-                return View(payees.ToList());
+                return View(AppUser.Payees.ToList());
             }
         }
         // GET: /Payee/CreatePayee
@@ -122,7 +119,68 @@ namespace FinalGroupProjectTeam8.Controllers
         // GET: /Payee/CreatePayment
         public ActionResult CreatePayment(string id)
         {
+
+            // We need a list of checking/savings accounts
+            string UserID = User.Identity.GetUserId();
+            var accounts = db.BankAccounts.Where(a => a.UserID == UserID).Where(a => (a.AccountType == BankAccount.BankAccountTypeEnum.CheckingAccount) || (a.AccountType == BankAccount.BankAccountTypeEnum.SavingsAccount));
+            ViewBag.BankAccountID = new SelectList(accounts, "BankAccountID", "NameWithBalance");
+
+            // Pass in the ViewModel 
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreatePayment([Bind(Include = "BankAccountID,Amount,Date,Description")] Payment payment)
+        {
+
+            // Give this dispute the right primary key
+            var idObject = db.Transactions.OrderByDescending(b => b.TransactionID).FirstOrDefault();
+            if (idObject == null) payment.TransactionID = "1";
+            else
+            {
+                int nextId = Convert.ToInt32(idObject.TransactionID) + 1;
+                String nextIdString = nextId.ToString();
+                payment.TransactionID = nextIdString;
+            }
+
+            /**
+             * Validation here
+             */
+
+            // Do validation here
+            if (payment.Amount <= 0)
+            {
+                return RedirectToAction("Error", "Home", new { ErrorMessage = "Please deposit an amount greater than 0." });
+            }
+
+            /**
+             * Any changes here
+             */
+            // Any changes
+            payment.TransactionStatus = Transaction.TransactionStatusEnum.Approved;
+
+            // Must update the balance
+            BankAccount BankAccount = db.BankAccounts.Find(payment.BankAccountID);
+            BankAccount.Balance = BankAccount.Balance - payment.Amount;
+            db.SaveChanges();
+
+            /**
+             * Finally save it to the database
+             */
+
+            // Actually saving it           
+            if (ModelState.IsValid)
+            {
+                db.Transactions.Add(payment);
+                db.SaveChanges();
+                return RedirectToAction("Success", "Transactions", new { Message = "Your transaction was successfully created." });
+            }
+
+            string UserID = User.Identity.GetUserId();
+            var accounts = db.BankAccounts.Where(a => a.UserID == UserID).Where(a => (a.AccountType == BankAccount.BankAccountTypeEnum.CheckingAccount) || (a.AccountType == BankAccount.BankAccountTypeEnum.SavingsAccount));
+            ViewBag.BankAccountID = new SelectList(accounts, "BankAccountID", "NameWithBalance");
+            return View(payment);
         }
 
         // GET: /Payee/ApplicationSuccess

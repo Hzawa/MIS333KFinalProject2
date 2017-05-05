@@ -157,6 +157,11 @@ namespace FinalGroupProjectTeam8.Controllers
                 transactions = transactions.Where(t => t.Description.Contains(Description));
             }
 
+            // Transaction ID filter
+            if (TransactionID != null && TransactionID != "") {
+                transactions = transactions.Where(t => t.TransactionID.Contains(TransactionID));
+            }
+
             /**
              * END filtering transactions
              */ 
@@ -187,7 +192,8 @@ namespace FinalGroupProjectTeam8.Controllers
                 ("Details", "BankAccount",
                 new {
                     BankAccountID = BankAccountDetailsViewModel.BankAccountID,
-                    Description = BankAccountDetailsViewModel.DescriptionFilter
+                    Description = BankAccountDetailsViewModel.DescriptionFilter,
+                    TransactionID = BankAccountDetailsViewModel.TransactionID
                 });
         }
 

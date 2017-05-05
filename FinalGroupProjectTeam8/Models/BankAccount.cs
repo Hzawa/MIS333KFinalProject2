@@ -34,6 +34,10 @@ namespace FinalGroupProjectTeam8.Models
         public String ShortBankAccountID {
             get { return "XXXXXX" + BankAccountID.Substring(Math.Max(0, BankAccountID.Length - 4)); }
         }
+        public String NameWithBalance
+        {
+            get { return "(" + Balance.ToString("C") + ")" + " " + Name;  }
+        }
 
     }
 }
