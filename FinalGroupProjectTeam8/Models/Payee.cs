@@ -34,8 +34,8 @@ namespace FinalGroupProjectTeam8.Models
         // A payee can be tied to multiple transactions
         public virtual List<Transaction> Transactions { get; set; }
 
-        // A payee can belong to many users
-        public virtual List<AppUser> Users { get; set; }
+        // A payee can be tied to multiple users
+        public virtual List<AppUser> AppUsers { get; set; }
 
     }
 }

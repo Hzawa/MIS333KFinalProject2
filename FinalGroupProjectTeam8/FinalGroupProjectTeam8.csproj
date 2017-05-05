@@ -311,9 +311,9 @@
     <Compile Include="Migrations\201705042332089_quick-mig.Designer.cs">
       <DependentUpon>201705042332089_quick-mig.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201705042351317_mostRecent.cs" />
-    <Compile Include="Migrations\201705042351317_mostRecent.Designer.cs">
-      <DependentUpon>201705042351317_mostRecent.cs</DependentUpon>
+    <Compile Include="Migrations\201705050032144_mig4.cs" />
+    <Compile Include="Migrations\201705050032144_mig4.Designer.cs">
+      <DependentUpon>201705050032144_mig4.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Utility\EmailMessaging.cs" />
@@ -375,6 +375,9 @@
     <Content Include="Views\Disputes\Edit.cshtml" />
     <Content Include="Views\Disputes\Index.cshtml" />
     <Content Include="Views\Disputes\CreateDispute.cshtml" />
+    <Content Include="Views\Disputes\ConfirmDispute.cshtml" />
+    <Content Include="Views\Payee\AddPayee.cshtml" />
+    <Content Include="Views\Payee\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -398,8 +401,8 @@
     <EmbeddedResource Include="Migrations\201705042332089_quick-mig.resx">
       <DependentUpon>201705042332089_quick-mig.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705042351317_mostRecent.resx">
-      <DependentUpon>201705042351317_mostRecent.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705050032144_mig4.resx">
+      <DependentUpon>201705050032144_mig4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

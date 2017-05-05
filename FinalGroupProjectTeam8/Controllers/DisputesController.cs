@@ -36,8 +36,67 @@ namespace FinalGroupProjectTeam8.Controllers
             return View(dispute);
         }
 
-        public ActionResult CreateDispute(int TransactionID) {
+        public ActionResult ConfirmDispute() {
             return View();
+        }
+
+        public ActionResult CreateDispute(int TransactionID) {
+            ViewBag.TransactionID = TransactionID;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateDispute([Bind(Include = "Comments,CorrectAmount,TransactionID,RequestDeletion")] Dispute dispute)
+        {
+
+            // Give this dispute the right primary key
+            var idObject = db.Disputes.OrderByDescending(b => b.DisputeID).FirstOrDefault();
+            if (idObject == null) dispute.DisputeID = "1";
+            else
+            {
+                int nextId = Convert.ToInt32(idObject.DisputeID) + 1;
+                String nextIdString = nextId.ToString();
+                dispute.DisputeID = nextIdString;
+            }
+
+            /**
+             * Validation here
+             */
+
+            // Check if dispute already exists for this transaction
+            var disputes = from d in db.Disputes
+                where d.TransactionID == dispute.TransactionID
+                && dispute.DisputeType == DisputeTypeEnum.Submitted
+                select d;
+            if (disputes.Count() > 0) {
+                return RedirectToAction("Error", "Home", new { ErrorMessage = "You already have a pending dispute for this transaction." });
+            }
+
+            /**
+             * Any changes here
+             */
+
+            // Mark it as submitted
+            dispute.DisputeType = DisputeTypeEnum.Submitted;
+
+            /**
+             * Finally save it to the database
+             */
+
+            // We need to get the transaction so we know BankAccountID to pass to BankAccount/Details
+            Transaction Transaction = db.Transactions.Find(dispute.TransactionID);
+
+            // Actually saving it           
+            if (ModelState.IsValid)
+            {
+                db.Disputes.Add(dispute);
+                db.SaveChanges();
+                return RedirectToAction("ConfirmDispute");
+            }
+
+            ViewBag.TransactionID = new SelectList(db.Transactions, "TransactionID", "Description", dispute.TransactionID);
+            return View(dispute);
         }
 
         // GET: Disputes/Create
