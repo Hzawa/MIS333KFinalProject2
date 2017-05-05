@@ -40,7 +40,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.DescriptionFilter, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.DescriptionFilter, "Description", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.DescriptionFilter, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.DescriptionFilter, "", new { @class = "text-danger" })
@@ -48,10 +48,76 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Search" class="btn btn-default" />
+            @Html.LabelFor(model => model.TransactionType, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(model => model.TransactionType, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TransactionType, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AmountLowerBound, "Lower Bound Amount", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AmountLowerBound, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AmountLowerBound, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AmountUpperBound, "Upper Bound Amount", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AmountUpperBound, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AmountUpperBound, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DateLowerBound, "Lower Bound Date", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DateLowerBound, new { htmlAttributes = new { @class = "form-control", @Value = Convert.ToString("") } })
+                @Html.ValidationMessageFor(model => model.DateLowerBound, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DateUpperBound, "Upper Bound Date", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DateUpperBound, new { htmlAttributes = new { @class = "form-control", @Value = Convert.ToString("") } })
+                @Html.ValidationMessageFor(model => model.DateUpperBound, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*gender radio buttons*@
+        @*<div class="form-group">
+            <div class="form-check">
+                <label class="form-check-label">
+                    @Html.RadioButton("SelectedGender", Amount.All, true, new { @class = "form-check-input" }) All
+                </label>
+            </div>
+            <div class="form-check">
+                <label class="form-check-label">
+                    @Html.RadioButton("SelectedGender", Gender.Male, new { @class = "form-check-input" }) Male
+                </label>
+            </div>
+            <div class="form-check">
+                <label class="form-check-label">
+                    @Html.RadioButton("SelectedGender", Gender.Female, new { @class = "form-check-input" }) Female
+                </label>
+            </div>
+        </div>*@
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Search" class="btn btn-default" />
+                <div class="btn btn-default">
+                    @Html.ActionLink("Show All", "Details", "BankAccount", new { BankAccountID = Model.BankAccountID }, null)
+                </div>
+            </div>
+        </div>
+
+
+
     </div>
 }
 

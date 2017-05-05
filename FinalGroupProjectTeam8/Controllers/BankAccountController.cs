@@ -119,6 +119,24 @@ namespace FinalGroupProjectTeam8.Controllers
             return View();
         }
 
+        //method to get all transactions
+        public SelectList GetAllTransactions()
+        {
+            var query = from c in db.Transactions
+                        orderby c.TransactionType
+                        select c.TransactionType;
+
+            List<Transaction.TransactionTypeEnum> allTransactions = query.Distinct().ToList();
+
+            Transaction.TransactionTypeEnum NoChoice = new Transaction.TransactionTypeEnum() { };
+            allTransactions.Add(NoChoice);
+
+            SelectList allTransactionsList = new SelectList(allTransactions);
+
+            return allTransactionsList;
+        }
+
+        //search
         public ActionResult Details(String BankAccountID, String TransactionID, String Description, TransactionTypeEnum? TransactionType, Decimal? AmountLowerBound, Decimal? AmountUpperBound, DateTime? DateLowerBound, DateTime? DateUpperBound) {
 
             // Query for given bank account ID
@@ -152,7 +170,7 @@ namespace FinalGroupProjectTeam8.Controllers
              * START filtering transactions
              */
 
-            // Description filter?
+            // Description filter
             if (Description != null && Description != "") {
                 transactions = transactions.Where(t => t.Description.Contains(Description));
             }
@@ -162,9 +180,49 @@ namespace FinalGroupProjectTeam8.Controllers
                 transactions = transactions.Where(t => t.TransactionID.Contains(TransactionID));
             }
 
+            //// Transaction type filter
+            //if (TransactionType == 0)
+            //{
+            //    //query = query
+            //}
+            //else
+            //{
+            //    transactions = transactions.Where(t => t.TransactionType == TransactionType);
+            //}
+
+            //Amount filter
+            if (AmountLowerBound != null && AmountLowerBound != 0.00m && AmountUpperBound != null && AmountUpperBound != 0.00m)
+            {
+                transactions = transactions.Where(t => t.Amount > AmountLowerBound);
+                transactions = transactions.Where(t => t.Amount < AmountUpperBound);
+            }
+            else if (AmountLowerBound != null && AmountLowerBound != 0.00m)
+            {
+                transactions = transactions.Where(t => t.Amount > AmountLowerBound);
+            }
+            else if (AmountUpperBound != null && AmountLowerBound != 0.00m)
+            {
+                transactions = transactions.Where(t => t.Amount < AmountUpperBound);
+            }
+
+            //Date filter
+            if (DateLowerBound != null && Convert.ToString(DateLowerBound) != "" && DateUpperBound != null && Convert.ToString(DateUpperBound) != "")
+            {
+                transactions = transactions.Where(t => t.Date > DateLowerBound);
+                transactions = transactions.Where(t => t.Date < DateUpperBound);
+            }
+            else if (AmountLowerBound != null && Convert.ToString(DateLowerBound) != "")
+            {
+                transactions = transactions.Where(t => t.Date > DateLowerBound);
+            }
+            else if (AmountUpperBound != null && Convert.ToString(DateUpperBound) != "")
+            {
+                transactions = transactions.Where(t => t.Date < DateUpperBound);
+            }
+
             /**
              * END filtering transactions
-             */ 
+             */
 
             // Create the ViewModel
             var model = new BankAccountDetailsViewModel { BankAccountID = BankAccount.BankAccountID, BankAccount = BankAccount, Transactions = transactions.ToList() };
@@ -193,7 +251,12 @@ namespace FinalGroupProjectTeam8.Controllers
                 new {
                     BankAccountID = BankAccountDetailsViewModel.BankAccountID,
                     Description = BankAccountDetailsViewModel.DescriptionFilter,
-                    TransactionID = BankAccountDetailsViewModel.TransactionID
+                    TransactionID = BankAccountDetailsViewModel.TransactionID,
+                    TransactionType = BankAccountDetailsViewModel.TransactionType,
+                    AmountLowerBound = BankAccountDetailsViewModel.AmountLowerBound,
+                    AmountUpperBound = BankAccountDetailsViewModel.AmountUpperBound,
+                    DateLowerBound = BankAccountDetailsViewModel.DateLowerBound,
+                    DateUpperBound = BankAccountDetailsViewModel.DateUpperBound,
                 });
         }
 
