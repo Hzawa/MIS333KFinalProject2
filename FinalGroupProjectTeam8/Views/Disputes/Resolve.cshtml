@@ -1,10 +1,10 @@
 ﻿@model FinalGroupProjectTeam8.Models.Dispute
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Resolve";
 }
 
-<h2>Edit</h2>
+<h2>Resolve</h2>
 
 
 @using (Html.BeginForm())
@@ -20,8 +20,24 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Comments, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Comments, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Transaction.Comments, new { htmlAttributes = new { @Value = Model.Comments , @readonly = "readonly", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Transaction.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Transaction.Amount, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Transaction.Amount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CorrectAmount, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CorrectAmount, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CorrectAmount, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -34,10 +50,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CorrectAmount, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Comments, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.CorrectAmount, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CorrectAmount, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Comments, new { htmlAttributes = new { @Value = "", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -52,7 +68,3 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

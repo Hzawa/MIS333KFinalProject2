@@ -40,13 +40,13 @@ namespace FinalGroupProjectTeam8.Controllers
         }
 
         // GET: Disputes/Edit/5
-        public ActionResult Resolve(string id)
+        public ActionResult Resolve(string DisputeID)
         {
-            if (id == null)
+            if (DisputeID == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Dispute dispute = db.Disputes.Find(id);
+            Dispute dispute = db.Disputes.Find(DisputeID);
             if (dispute == null)
             {
                 return HttpNotFound();
@@ -59,15 +59,71 @@ namespace FinalGroupProjectTeam8.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Resolve([Bind(Include = "DisputeID,Comments,DisputeType,CorrentAmount,TransactionID")] Dispute dispute)
+        public ActionResult Resolve(Dispute dispute)
         {
-            if (ModelState.IsValid)
+
+            // Update the dispute
+            Dispute EditedDispute = db.Disputes.Find(dispute.DisputeID);
+            EditedDispute.DisputeType = dispute.DisputeType;
+            EditedDispute.Comments = EditedDispute.Comments + "--Manager:" + dispute.Comments;
+
+            if (EditedDispute.DisputeType == DisputeTypeEnum.Adjusted) {
+                EditedDispute.CorrectAmount = dispute.CorrectAmount;
+            }
+
+            if (EditedDispute.DisputeType == DisputeTypeEnum.Accepted || EditedDispute.DisputeType == DisputeTypeEnum.Adjusted)
             {
-                db.Entry(dispute).State = EntityState.Modified;
+
+                // Get change
+                Decimal Change = EditedDispute.CorrectAmount - EditedDispute.Transaction.Amount;
+
+                // Set new transaction amount
+                Transaction Transaction = db.Transactions.Find(EditedDispute.TransactionID);
+                Transaction.Amount = EditedDispute.CorrectAmount;
+
+                // And the description
+                Transaction.Description = "[Dispute " + EditedDispute.DisputeType.ToString() + "] " + Transaction.Description;
+                db.Entry(Transaction).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                // Get the corresponding bank account
+                BankAccount BankAccount = db.BankAccounts.Find(EditedDispute.Transaction.BankAccountID);
+
+                // If dispute was successful, adjust account with the difference
+                if (EditedDispute.Transaction.TransactionType == Transaction.TransactionTypeEnum.Deposit) {
+                    BankAccount.Balance = BankAccount.Balance + Change;
+                } else if (EditedDispute.Transaction.TransactionType == Transaction.TransactionTypeEnum.Withdrawal || EditedDispute.Transaction.TransactionType == Transaction.TransactionTypeEnum.Payment) {
+                    BankAccount.Balance = BankAccount.Balance - Change;
+                } else if (EditedDispute.Transaction.TransactionType == Transaction.TransactionTypeEnum.Transfer) {
+                    BankAccount.Balance = BankAccount.Balance - Change;
+
+                    // Must also update the receiving bank account
+                    Transfer Transfer = (Transfer) db.Transactions.Find(EditedDispute.TransactionID);
+                    BankAccount ReceivingBankAccount = db.BankAccounts.Find(Transfer.ReceivingBankAccountID);
+                    ReceivingBankAccount.Balance = ReceivingBankAccount.Balance + Change;
+                    db.Entry(ReceivingBankAccount).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+
+                // Update BankAccount
+                db.Entry(BankAccount).State = EntityState.Modified;
+                db.SaveChanges();
+
+            }
+
+            // Finally, update the dispute
+            ModelState.Clear();
+            if (TryValidateModel(EditedDispute))
+            {
+                db.Entry(EditedDispute).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("ConfirmResolution");
             }
             return View(dispute);
+        }
+
+        public ActionResult ConfirmResolution() {
+            return View();
         }
 
         public ActionResult ConfirmDispute() {

@@ -148,6 +148,7 @@ namespace FinalGroupProjectTeam8.Controllers
             EditingAppUser.PhoneNumber = appUser.PhoneNumber;
             EditingAppUser.UserName = appUser.UserName;
 
+            ModelState.Clear();
             if (TryValidateModel(EditingAppUser))
             {
                 db.Entry(EditingAppUser).State = EntityState.Modified;

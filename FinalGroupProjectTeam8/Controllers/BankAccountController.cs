@@ -297,6 +297,7 @@ namespace FinalGroupProjectTeam8.Controllers
             BankAccount EditingBankAccount = db.BankAccounts.Find(bankAccount.BankAccountID);
             EditingBankAccount.Name = bankAccount.Name;
 
+            ModelState.Clear();
             if (TryValidateModel(EditingBankAccount))
             {
                 db.Entry(EditingBankAccount).State = EntityState.Modified;
