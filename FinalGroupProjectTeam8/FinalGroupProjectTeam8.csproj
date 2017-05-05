@@ -296,29 +296,9 @@
     <Compile Include="Controllers\RoleAdminController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Migrations\201705042223550_Initial.cs" />
-    <Compile Include="Migrations\201705042223550_Initial.Designer.cs">
-      <DependentUpon>201705042223550_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705042301032_mig2.cs" />
-    <Compile Include="Migrations\201705042301032_mig2.Designer.cs">
-      <DependentUpon>201705042301032_mig2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705042316539_mig123.cs" />
-    <Compile Include="Migrations\201705042316539_mig123.Designer.cs">
-      <DependentUpon>201705042316539_mig123.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705042332089_quick-mig.cs" />
-    <Compile Include="Migrations\201705042332089_quick-mig.Designer.cs">
-      <DependentUpon>201705042332089_quick-mig.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705050032144_mig4.cs" />
-    <Compile Include="Migrations\201705050032144_mig4.Designer.cs">
-      <DependentUpon>201705050032144_mig4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705051129389_mig21.cs" />
-    <Compile Include="Migrations\201705051129389_mig21.Designer.cs">
-      <DependentUpon>201705051129389_mig21.cs</DependentUpon>
+    <Compile Include="Migrations\201705051142181_Initial.cs" />
+    <Compile Include="Migrations\201705051142181_Initial.Designer.cs">
+      <DependentUpon>201705051142181_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ManagerHomeViewModel.cs" />
@@ -406,23 +386,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705042223550_Initial.resx">
-      <DependentUpon>201705042223550_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705042301032_mig2.resx">
-      <DependentUpon>201705042301032_mig2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705042316539_mig123.resx">
-      <DependentUpon>201705042316539_mig123.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705042332089_quick-mig.resx">
-      <DependentUpon>201705042332089_quick-mig.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705050032144_mig4.resx">
-      <DependentUpon>201705050032144_mig4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705051129389_mig21.resx">
-      <DependentUpon>201705051129389_mig21.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705051142181_Initial.resx">
+      <DependentUpon>201705051142181_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
